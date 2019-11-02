@@ -1,0 +1,29 @@
+<mat-toolbar color="primary" class="toolbar" (keydown.control.b)="sidenav.toggle()">
+    <button mat-icon-button (click)="sidenav.toggle()"><mat-icon>menu</mat-icon></button>
+    <h1 class="app-name">NuMath</h1>
+  </mat-toolbar>
+
+<mat-sidenav-container class="sidenav-container" (keydown.control.b)="sidenav.toggle()" style="height: 90%;">
+    <mat-sidenav #sidenav mode="side">
+      <mat-nav-list>
+        <a mat-list-item routerLink="/singleVariable">Single Variable Equations</a>
+        <a mat-list-item routerLink="/equationSystems">Solution of Equation Systems</a>
+        <a mat-list-item routerLink="/interpolation">Interpolation</a>
+        <a mat-list-item routerLink="/diferentiation">Numerical Diferentiation</a>
+        <a mat-list-item routerLink="/integration">Numerical Integration</a>
+      </mat-nav-list>
+    </mat-sidenav>
+  
+    <mat-sidenav-content>
+      <div *ngIf="this.router.url == '/'">
+        <h1 style="text-align:center; color: rgb(177, 177, 177);">
+            Welcome to {{ title }}!
+        </h1>
+      </div>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+</mat-sidenav-container>
+
+        
+
+
