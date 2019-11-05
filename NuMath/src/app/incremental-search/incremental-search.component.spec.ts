@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EquationSystemsComponent } from './equation-systems.component';
+import { IncrementalSearchComponent } from './incremental-search.component';
 
-describe('EquationSystemsComponent', () => {
-  let component: EquationSystemsComponent;
-  let fixture: ComponentFixture<EquationSystemsComponent>;
+describe('IncrementalSearchComponent', () => {
+  let component: IncrementalSearchComponent;
+  let fixture: ComponentFixture<IncrementalSearchComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EquationSystemsComponent ]
+      declarations: [ IncrementalSearchComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EquationSystemsComponent);
+    fixture = TestBed.createComponent(IncrementalSearchComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

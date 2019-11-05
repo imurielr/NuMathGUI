@@ -6,23 +6,15 @@ import { AppComponent } from './app.component';
 
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule, MatButtonModule } from  '@angular/material';
+import { MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule, MatButtonModule, MatExpansionModule } from  '@angular/material';
 
 import { MatSliderModule } from '@angular/material/slider';
-import { SingleVariableEqComponent } from './single-variable-eq/single-variable-eq.component';
-import { EquationSystemsComponent } from './equation-systems/equation-systems.component';
-import { InterpolationComponent } from './interpolation/interpolation.component';
-import { DiferentiationComponent } from './diferentiation/diferentiation.component';
-import { IntegrationComponent } from './integration/integration.component';
+import { IncrementalSearchComponent } from './incremental-search/incremental-search.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SingleVariableEqComponent,
-    EquationSystemsComponent,
-    InterpolationComponent,
-    DiferentiationComponent,
-    IntegrationComponent
+    IncrementalSearchComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +26,8 @@ import { IntegrationComponent } from './integration/integration.component';
     MatIconModule,
     MatSidenavModule,
     MatListModule,
-    MatSliderModule
+    MatSliderModule,
+    MatExpansionModule
   ],
   providers: [],
   bootstrap: [AppComponent]
