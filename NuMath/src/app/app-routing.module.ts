@@ -1,12 +1,128 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+
 import { IncrementalSearchComponent } from './incremental-search/incremental-search.component';
+import { BisectionComponent } from './bisection/bisection.component';
+import { FalsePositionComponent } from './false-position/false-position.component';
+import { FixedPointComponent } from './fixed-point/fixed-point.component';
+import { NewtonSingleVarEqComponent } from './newton-single-var-eq/newton-single-var-eq.component';
+import { SecantComponent } from './secant/secant.component';
+import { MultipleRootsComponent } from './multiple-roots/multiple-roots.component';
+import { SimpleGaussianEliminationComponent } from './simple-gaussian-elimination/simple-gaussian-elimination.component';
+import { PartialPivotGaussianEliminationComponent } from './partial-pivot-gaussian-elimination/partial-pivot-gaussian-elimination.component';
+import { TotalPivotGaussianEliminationComponent } from './total-pivot-gaussian-elimination/total-pivot-gaussian-elimination.component';
+import { DoolittleComponent } from './doolittle/doolittle.component';
+import { CroutComponent } from './crout/crout.component';
+import { CholeskyComponent } from './cholesky/cholesky.component';
+import { LagrangeComponent } from './lagrange/lagrange.component';
+import { NewtonInterpolationComponent } from './newton-interpolation/newton-interpolation.component';
+import { Dif2PointsComponent } from './dif2-points/dif2-points.component';
+import { Dif3PointsComponent } from './dif3-points/dif3-points.component';
+import { Dif5PointsComponent } from './dif5-points/dif5-points.component';
+import { SimpleTrapeziumComponent } from './simple-trapezium/simple-trapezium.component';
+import { GeneralTrapeziumComponent } from './general-trapezium/general-trapezium.component';
+import { SimpleSimpson13Component } from './simple-simpson13/simple-simpson13.component';
+import { GeneralSimpson13Component } from './general-simpson13/general-simpson13.component';
+import { SimpleSimpson38Component } from './simple-simpson38/simple-simpson38.component';
+import { GeneralSimpson38Component } from './general-simpson38/general-simpson38.component';
 
 const routes: Routes = [
   {
     path: 'incrSearch',
     component: IncrementalSearchComponent
-  }
+  },
+  {
+    path: 'bisection',
+    component: BisectionComponent
+  },
+  {
+    path: 'falsePosition',
+    component: FalsePositionComponent
+  },
+  {
+    path: 'fixedPoint',
+    component: FixedPointComponent
+  },
+  {
+    path: 'newtonVarEq',
+    component: NewtonSingleVarEqComponent
+  },
+  {
+    path: 'secant',
+    component: SecantComponent
+  },
+  {
+    path: 'multipleRoots',
+    component: MultipleRootsComponent
+  },
+  {
+    path: 'simpleGaussianElim',
+    component: SimpleGaussianEliminationComponent
+  },
+  {
+    path: 'partialPivot',
+    component: PartialPivotGaussianEliminationComponent
+  },
+  {
+    path: 'totalPivot',
+    component: TotalPivotGaussianEliminationComponent
+  },
+  {
+    path: 'doolitle',
+    component: DoolittleComponent
+  },
+  {
+    path: 'crout',
+    component: CroutComponent
+  },
+  {
+    path: 'cholesky',
+    component: CholeskyComponent
+  },
+  {
+    path: 'lagrange',
+    component: LagrangeComponent
+  },
+  {
+    path: 'newtonInterpolation',
+    component: NewtonInterpolationComponent
+  },
+  {
+    path: '2Points',
+    component: Dif2PointsComponent
+  },
+  {
+    path: '3Points',
+    component: Dif3PointsComponent
+  },
+  {
+    path: '5Points',
+    component: Dif5PointsComponent
+  },
+  {
+    path: 'simpleTrapezium',
+    component: SimpleTrapeziumComponent
+  },
+  {
+    path: 'generalTrapezium',
+    component: GeneralTrapeziumComponent
+  },
+  {
+    path: 'simpleSimpson_1_3',
+    component: SimpleSimpson13Component
+  },
+  {
+    path: 'generalSimpson_1_3',
+    component: GeneralSimpson13Component
+  },
+  {
+    path: 'simpleSimpson_3_8',
+    component: SimpleSimpson38Component
+  },
+  {
+    path: 'generalSimpson_3_8',
+    component: GeneralSimpson38Component
+  },
 ];
 
 @NgModule({
