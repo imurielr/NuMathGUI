@@ -2,3 +2,29 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+#methodTitle {
+    text-align: center;
+}
+
+#helper {
+    text-align:center; 
+    margin-left: 20%; 
+    margin-right: 20%;
+}
+
+#scrolltable {
+    height: 400px; 
+    overflow: auto;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.cell {
+    width: 40px; 
+    height: 35px; 
+    font-size: medium;
+}

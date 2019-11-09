@@ -6,9 +6,10 @@ import { AppComponent } from './app.component';
 
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule, MatButtonModule, MatExpansionModule } from  '@angular/material';
+import { MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule, MatButtonModule, MatExpansionModule, MatFormFieldModule, MatInputModule, MatSnackBarModule, MatSelectModule, MatTableModule } from  '@angular/material';
 
 import { MatSliderModule } from '@angular/material/slider';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 import { IncrementalSearchComponent } from './incremental-search/incremental-search.component';
@@ -35,6 +36,7 @@ import { SimpleSimpson13Component } from './simple-simpson13/simple-simpson13.co
 import { GeneralSimpson13Component } from './general-simpson13/general-simpson13.component';
 import { SimpleSimpson38Component } from './simple-simpson38/simple-simpson38.component';
 import { GeneralSimpson38Component } from './general-simpson38/general-simpson38.component';
+
 
 @NgModule({
   declarations: [
@@ -75,7 +77,14 @@ import { GeneralSimpson38Component } from './general-simpson38/general-simpson38
     MatSidenavModule,
     MatListModule,
     MatSliderModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatSnackBarModule,
+    MatSelectModule,
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]

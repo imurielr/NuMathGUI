@@ -1,6 +1,6 @@
 <mat-toolbar color="primary" class="toolbar" (keydown.control.b)="sidenav.toggle()">
     <button mat-icon-button (click)="sidenav.toggle()"><mat-icon>menu</mat-icon></button>
-    <h1 class="app-name">NuMath</h1>
+    <h1 class="app-name">{{ title }}</h1>
   </mat-toolbar>
   
 <mat-sidenav-container class="sidenav-container" (keydown.control.b)="sidenav.toggle()" style="height: 90%;">

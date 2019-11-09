@@ -1,1 +1,54 @@
-<p>incremental-search works!</p>
+<h1 id=methodTitle>{{ title }}</h1>
+
+<p id=helper>Incremental search aims to find an interval that contains at least one root by iterating 
+    through the function, starting at an initial value and adding a previously deifned delta 
+    to it, until there's a sign change between two points a and b evaluated in the function.
+</p>
+
+<div style=" margin-left: 3%; margin-right: 3%;">
+
+    <div id="scrolltable" style="width: 48%; float: left;">
+        <form>
+            <div class="form-container">
+                <mat-form-field style="margin-bottom: 6px;">
+                    <input id="function" matInput placeholder="Function" [formControl]="f_control" required>
+                    <mat-error *ngIf="f_control.invalid">{{getErrorMessage("f")}}</mat-error>
+                </mat-form-field>
+                
+                <mat-form-field style="margin-bottom: 6px;">
+                    <input id="x0" matInput type="number" placeholder="X0" [formControl]="x0_control" required>
+                    <mat-error *ngIf="x0_control.invalid">{{getErrorMessage("x0")}}</mat-error>
+                </mat-form-field>
+
+                <mat-form-field style="margin-bottom: 6px;">
+                    <input id="delta" matInput type="number" placeholder="Delta" [formControl]="delta_control" required>
+                    <mat-error *ngIf="delta_control.invalid">{{getErrorMessage("delta")}}</mat-error>
+                </mat-form-field>
+
+                <mat-form-field style="margin-bottom: 6px;">
+                    <input id="nIter" matInput type="number" placeholder="Number of Iterations" [formControl]="nIter_control" required>
+                    <mat-error *ngIf="nIter_control.invalid">{{getErrorMessage("nIter")}}</mat-error>
+                </mat-form-field>
+
+                <br>
+                <button mat-raised-button color="primary" (click)="plot();">Calculate</button>
+            </div>
+        </form>
+    </div>
+
+    <div style="width: 48%; float: right;">
+        <!-- <p>Incremental search aims to find an interval that contains at least one root by iterating 
+            through the function, starting at an initial value and adding a previously deifned delta 
+            to it, until there's a sign change between two points a and b evaluated in the function.
+        </p> -->
+        <a style="font-size: large;">Function: </a> <a>{{f}}</a>
+        <br><br>
+        <a style="font-size: large;">X0: </a> <a>{{x0}}</a>
+        <br><br>
+        <a style="font-size: large;">Delta: </a> <a>{{delta}}</a>
+        <br><br>
+        <a style="font-size: large;">Number of Iterations: </a> <a>{{nIter}}</a>
+
+    </div>
+    
+</div>

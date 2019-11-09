@@ -1,1 +1,80 @@
-<p>multiple-roots works!</p>
+<h1 id=methodTitle>{{ title }}</h1>
+
+<p id=helper>The multiple roots method is a variant of Newton’s and the fixed 
+             point methods, where the update rule of the succession is 
+             xn+1=xn-f(xn)*f'(xn)f'(xn)2 -f(xn)*f''(xn) . It works especially 
+             well when the derivative of the function tends to zero as it nears 
+             the root, case in which neither Newton’s nor the fixed point method 
+             work due to convergence problems.
+</p>
+
+<div style=" margin-left: 3%; margin-right: 3%;">
+
+    <div id="scrolltable" style="width: 48%; float: left;">
+        <form>
+            <div class="form-container">
+                <mat-form-field style="margin-bottom: 6px;">
+                    <input id="function" matInput placeholder="Function" [formControl]="f_control" required>
+                    <mat-error *ngIf="f_control.invalid">{{getErrorMessage("f")}}</mat-error>
+                </mat-form-field>
+
+                <mat-form-field style="margin-bottom: 6px;">
+                    <input id="d" matInput placeholder="Derivative Function" [formControl]="d_control" required>
+                    <mat-error *ngIf="d_control.invalid">{{getErrorMessage("d")}}</mat-error>
+                </mat-form-field>
+
+                <mat-form-field style="margin-bottom: 6px;">
+                    <input id="d2" matInput placeholder="Second Derivative Function" [formControl]="d2_control" required>
+                    <mat-error *ngIf="d2_control.invalid">{{getErrorMessage("d2")}}</mat-error>
+                </mat-form-field>
+                
+                <mat-form-field style="margin-bottom: 6px;">
+                    <input id="x0" type="number" matInput placeholder="X0" [formControl]="x0_control" required>
+                    <mat-error *ngIf="x0_control.invalid">{{getErrorMessage("x0")}}</mat-error>
+                </mat-form-field>
+
+                <mat-form-field style="margin-bottom: 6px;">
+                    <input id="nIter" matInput type="number" placeholder="Number of Iterations" [formControl]="nIter_control" required>
+                    <mat-error *ngIf="nIter_control.invalid">{{getErrorMessage("nIter")}}</mat-error>
+                </mat-form-field>
+
+                <mat-form-field style="margin-bottom: 6px;">
+                    <input id="tol" matInput type="number" placeholder="Tolerance" [formControl]="tol_control" required>
+                    <mat-error *ngIf="tol_control.invalid">{{getErrorMessage("tol")}}</mat-error>
+                </mat-form-field>
+
+                <mat-form-field style="margin-bottom: 6px;">
+                    <mat-label>Error Type</mat-label>
+                    <mat-select matNativeControl [formControl]="error_control" required [(value)]=error>
+                        <mat-option *ngFor="let error of errorTypes" [value]="error">
+                            {{error}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="error_control.invalid">{{getErrorMessage("error")}}</mat-error>
+                </mat-form-field>                
+
+                <br>
+                <button mat-raised-button color="primary" (click)="plot();">Calculate</button>
+                <br>
+            </div>
+        </form>
+    </div>
+
+    <div style="width: 48%; float: right;">
+        <a style="font-size: large;">Function: </a> <a>{{f}}</a>
+        <br><br>
+        <a style="font-size: large;">Derivative Function: </a> <a>{{d}}</a>
+        <br><br>
+        <a style="font-size: large;">Second Derivative Function: </a> <a>{{d2}}</a>
+        <br><br>
+        <a style="font-size: large;">X0: </a> <a>{{x0}}</a>
+        <br><br>
+        <a style="font-size: large;">Number of Iterations: </a> <a>{{nIter}}</a>
+        <br><br>
+        <a style="font-size: large;">Tolerance: </a> <a>{{tolerance}}</a>
+        <br><br>
+        <a style="font-size: large;">Error Type: </a> <a>{{error}}</a>
+
+    </div>
+    
+</div>

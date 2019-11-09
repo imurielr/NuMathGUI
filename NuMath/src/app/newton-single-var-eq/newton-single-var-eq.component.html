@@ -1,1 +1,74 @@
-<p>newton-single-var-eq works!</p>
+<h1 id=methodTitle>{{ title }}</h1>
+
+<p id=helper>Newton’s method is a fixed point variation, where the function g is calculated as 
+             xn+1=xn-f(xn)f'(xn), and starts from a given initial value. It then generates a 
+             succession of values to finally converge to a root. Graphically, Newton’s method 
+             finds the root through tangents of certain points of the function.
+             <br><br>
+             This method is extremely fast, even though a good initial value is needed to perform that well.
+        
+</p>
+
+<div style=" margin-left: 3%; margin-right: 3%;">
+
+    <div id="scrolltable" style="width: 48%; float: left;">
+        <form>
+            <div class="form-container">
+                <mat-form-field style="margin-bottom: 6px;">
+                    <input id="function" matInput placeholder="Function" [formControl]="f_control" required>
+                    <mat-error *ngIf="f_control.invalid">{{getErrorMessage("f")}}</mat-error>
+                </mat-form-field>
+                
+                <mat-form-field style="margin-bottom: 6px;">
+                    <input id="dFunction" matInput placeholder="Derivative Function" [formControl]="d_control" required>
+                    <mat-error *ngIf="d_control.invalid">{{getErrorMessage("d")}}</mat-error>
+                </mat-form-field>
+
+                <mat-form-field style="margin-bottom: 6px;">
+                    <input id="x0" matInput type="number" placeholder="X0" [formControl]="x0_control" required>
+                    <mat-error *ngIf="x0_control.invalid">{{getErrorMessage("x0")}}</mat-error>
+                </mat-form-field>
+
+                <mat-form-field style="margin-bottom: 6px;">
+                    <input id="nIter" matInput type="number" placeholder="Number of Iterations" [formControl]="nIter_control" required>
+                    <mat-error *ngIf="nIter_control.invalid">{{getErrorMessage("nIter")}}</mat-error>
+                </mat-form-field>
+
+                <mat-form-field style="margin-bottom: 6px;">
+                    <input id="tol" matInput type="number" placeholder="Tolerance" [formControl]="tol_control" required>
+                    <mat-error *ngIf="tol_control.invalid">{{getErrorMessage("tol")}}</mat-error>
+                </mat-form-field>
+
+                <mat-form-field style="margin-bottom: 6px;">
+                    <mat-label>Error Type</mat-label>
+                    <mat-select matNativeControl [formControl]="error_control" required [(value)]=error>
+                        <mat-option *ngFor="let error of errorTypes" [value]="error">
+                            {{error}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="error_control.invalid">{{getErrorMessage("error")}}</mat-error>
+                </mat-form-field>                
+
+                <br>
+                <button mat-raised-button color="primary" (click)="plot();">Calculate</button>
+                <br>
+            </div>
+        </form>
+    </div>
+
+    <div style="width: 48%; float: right;">
+        <a style="font-size: large;">Function: </a> <a>{{f}}</a>
+        <br><br>
+        <a style="font-size: large;">Derivative Function: </a> <a>{{d}}</a>
+        <br><br>
+        <a style="font-size: large;">X0: </a> <a>{{x0}}</a>
+        <br><br>
+        <a style="font-size: large;">Number of Iterations: </a> <a>{{nIter}}</a>
+        <br><br>
+        <a style="font-size: large;">Tolerance: </a> <a>{{tolerance}}</a>
+        <br><br>
+        <a style="font-size: large;">Error Type: </a> <a>{{error}}</a>
+
+    </div>
+    
+</div>

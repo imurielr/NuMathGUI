@@ -1,1 +1,72 @@
-<p>false-position works!</p>
+<h1 id=methodTitle>{{ title }}</h1>
+
+<p id=helper>False position is a closed method that uses an interval containing 
+             a root and it finds the root’s exact or approximate value by tracing 
+             a straight line between both extremes of the interval and taking the
+             point that cuts the x-axis as the limit for the two generated sub-intervals.
+             It then analyzes where the root is and repeats the same process in said 
+             interval, until the root is found.
+</p>
+
+<div style=" margin-left: 3%; margin-right: 3%;">
+
+    <div id="scrolltable" style="width: 48%; float: left;">
+        <form>
+            <div class="form-container">
+                <mat-form-field style="margin-bottom: 6px;">
+                    <input id="function" matInput placeholder="Function" [formControl]="f_control" required>
+                    <mat-error *ngIf="f_control.invalid">{{getErrorMessage("f")}}</mat-error>
+                </mat-form-field>
+                
+                <mat-form-field style="margin-bottom: 6px;">
+                    <input id="xi" matInput type="number" placeholder="Xi" [formControl]="xi_control" required>
+                    <mat-error *ngIf="xi_control.invalid">{{getErrorMessage("xi")}}</mat-error>
+                </mat-form-field>
+
+                <mat-form-field style="margin-bottom: 6px;">
+                    <input id="xu" matInput type="number" placeholder="Xu" [formControl]="xu_control" required>
+                    <mat-error *ngIf="xu_control.invalid">{{getErrorMessage("xu")}}</mat-error>
+                </mat-form-field>
+
+                <mat-form-field style="margin-bottom: 6px;">
+                    <input id="nIter" matInput type="number" placeholder="Number of Iterations" [formControl]="nIter_control" required>
+                    <mat-error *ngIf="nIter_control.invalid">{{getErrorMessage("nIter")}}</mat-error>
+                </mat-form-field>
+
+                <mat-form-field style="margin-bottom: 6px;">
+                    <input id="tol" matInput type="number" placeholder="Tolerance" [formControl]="tol_control" required>
+                    <mat-error *ngIf="tol_control.invalid">{{getErrorMessage("tol")}}</mat-error>
+                </mat-form-field>
+
+                <mat-form-field style="margin-bottom: 6px;">
+                    <mat-label>Error Type</mat-label>
+                    <mat-select matNativeControl [formControl]="error_control" required [(value)]=error>
+                        <mat-option *ngFor="let error of errorTypes" [value]="error">
+                            {{error}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="error_control.invalid">{{getErrorMessage("error")}}</mat-error>
+                </mat-form-field>                
+
+                <br>
+                <button mat-raised-button color="primary" (click)="plot();">Calculate</button>
+            </div>
+        </form>
+    </div>
+
+    <div style="width: 48%; float: right;">
+        <a style="font-size: large;">Function: </a> <a>{{f}}</a>
+        <br><br>
+        <a style="font-size: large;">Xi: </a> <a>{{xi}}</a>
+        <br><br>
+        <a style="font-size: large;">Xu: </a> <a>{{xu}}</a>
+        <br><br>
+        <a style="font-size: large;">Number of Iterations: </a> <a>{{nIter}}</a>
+        <br><br>
+        <a style="font-size: large;">Tolerance: </a> <a>{{tolerance}}</a>
+        <br><br>
+        <a style="font-size: large;">Error Type: </a> <a>{{error}}</a>
+
+    </div>
+    
+</div>

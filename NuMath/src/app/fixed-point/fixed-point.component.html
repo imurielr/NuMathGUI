@@ -1,1 +1,71 @@
-<p>fixed-point works!</p>
+<h1 id=methodTitle>{{ title }}</h1>
+
+<p id=helper>Fixed point is an open method that aims to find the root of a 
+             function by using an initial value and generating a succession of values 
+             following xn+1=g(xn), this way it hopes to converge to a certain value 
+             that stays invariant though the function g. Graphically, this method looks 
+             for the intersection between g(x) and the line y=x.
+</p>
+
+<div style=" margin-left: 3%; margin-right: 3%;">
+
+    <div id="scrolltable" style="width: 48%; float: left;">
+        <form>
+            <div class="form-container">
+                <mat-form-field style="margin-bottom: 6px;">
+                    <input id="function" matInput placeholder="Function" [formControl]="f_control" required>
+                    <mat-error *ngIf="f_control.invalid">{{getErrorMessage("f")}}</mat-error>
+                </mat-form-field>
+                
+                <mat-form-field style="margin-bottom: 6px;">
+                    <input id="g" matInput placeholder="g Function" [formControl]="g_control" required>
+                    <mat-error *ngIf="g_control.invalid">{{getErrorMessage("g")}}</mat-error>
+                </mat-form-field>
+
+                <mat-form-field style="margin-bottom: 6px;">
+                    <input id="xa" matInput type="number" placeholder="Xa" [formControl]="xa_control" required>
+                    <mat-error *ngIf="xa_control.invalid">{{getErrorMessage("xa")}}</mat-error>
+                </mat-form-field>
+
+                <mat-form-field style="margin-bottom: 6px;">
+                    <input id="nIter" matInput type="number" placeholder="Number of Iterations" [formControl]="nIter_control" required>
+                    <mat-error *ngIf="nIter_control.invalid">{{getErrorMessage("nIter")}}</mat-error>
+                </mat-form-field>
+
+                <mat-form-field style="margin-bottom: 6px;">
+                    <input id="tol" matInput type="number" placeholder="Tolerance" [formControl]="tol_control" required>
+                    <mat-error *ngIf="tol_control.invalid">{{getErrorMessage("tol")}}</mat-error>
+                </mat-form-field>
+
+                <mat-form-field style="margin-bottom: 6px;">
+                    <mat-label>Error Type</mat-label>
+                    <mat-select matNativeControl [formControl]="error_control" required [(value)]=error>
+                        <mat-option *ngFor="let error of errorTypes" [value]="error">
+                            {{error}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="error_control.invalid">{{getErrorMessage("error")}}</mat-error>
+                </mat-form-field>                
+
+                <br>
+                <button mat-raised-button color="primary" (click)="plot();">Calculate</button>
+            </div>
+        </form>
+    </div>
+
+    <div style="width: 48%; float: right;">
+        <a style="font-size: large;">Function: </a> <a>{{f}}</a>
+        <br><br>
+        <a style="font-size: large;">g Function: </a> <a>{{g}}</a>
+        <br><br>
+        <a style="font-size: large;">Xa: </a> <a>{{xa}}</a>
+        <br><br>
+        <a style="font-size: large;">Number of Iterations: </a> <a>{{nIter}}</a>
+        <br><br>
+        <a style="font-size: large;">Tolerance: </a> <a>{{tolerance}}</a>
+        <br><br>
+        <a style="font-size: large;">Error Type: </a> <a>{{error}}</a>
+
+    </div>
+    
+</div>
