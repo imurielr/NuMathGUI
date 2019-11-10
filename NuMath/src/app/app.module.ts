@@ -27,6 +27,9 @@ import { CroutComponent } from './crout/crout.component';
 import { CholeskyComponent } from './cholesky/cholesky.component';
 import { LagrangeComponent } from './lagrange/lagrange.component';
 import { NewtonInterpolationComponent } from './newton-interpolation/newton-interpolation.component';
+import { SimpleSplineComponent } from './simple-spline/simple-spline.component';
+import { QuadraticSplineComponent } from './quadratic-spline/quadratic-spline.component';
+import { CubicSplineComponent } from './cubic-spline/cubic-spline.component';
 import { Dif2PointsComponent } from './dif2-points/dif2-points.component';
 import { Dif3PointsComponent } from './dif3-points/dif3-points.component';
 import { Dif5PointsComponent } from './dif5-points/dif5-points.component';
@@ -58,6 +61,9 @@ import { GaussSeidelComponent } from './gauss-seidel/gauss-seidel.component';
     CholeskyComponent,
     LagrangeComponent,
     NewtonInterpolationComponent,
+    SimpleSplineComponent,
+    QuadraticSplineComponent,
+    CubicSplineComponent,
     Dif2PointsComponent,
     Dif3PointsComponent,
     Dif5PointsComponent,
