@@ -23,7 +23,6 @@
     "@angular/router": "~8.0.0",
     "bootstrap-next": "^1.0.5",
     "d3": "^3.5.17",
-    "function-plot": "^1.19.1",
     "hammerjs": "^2.0.8",
     "rxjs": "~6.4.0",
     "tslib": "^1.9.0",
