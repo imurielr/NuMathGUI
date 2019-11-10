@@ -1,1 +1,38 @@
-<p>lagrange works!</p>
+<h1 id=methodTitle>{{ title }}</h1>
+
+<p id=helper> This method calculates a polynomial which pass through every point given. (COMPLETAR ESTA DEFINICION)
+</p>
+
+<div style=" margin-left: 3%; margin-right: 3%; margin-top: 10%;">
+
+    <div id="scrolltable" style="width: 48%; float: left; margin-left: 80px;">
+        <form style="width: 40%;">
+            <div class="form-container" *ngIf="!showTable">
+                <mat-form-field style="margin-bottom: 4px;">
+                    <input id="n" matInput placeholder="Number of Points" type="number" [formControl]="n_control" required>
+                    <mat-error *ngIf="n_control.invalid">{{getErrorMessage()}}</mat-error>
+                </mat-form-field>
+                <button mat-raised-button color="primary" style="width: min-content;" (click)="showMatrix();">Enter Matrix</button>
+            </div>
+            <br>
+            <div *ngIf="showTable">
+                <button mat-icon-button (click)="showTable=false;"><mat-icon>arrow_back</mat-icon></button>
+                <h4> Please enter points (x , y)</h4>
+                <form>
+                    <table id="matrix">
+                        <tr *ngFor="let row of data; index as i" id="row{{i+1}}">
+                            <p> Point {{i+1}} </p>
+                            <td *ngFor="let number of [0,1]"><input class="cell" id="cell{{i+1}}{{number}}" type="number" required></td>
+                        </tr>
+                    </table>
+                    <button mat-raised-button color="primary" style="width: min-content; margin-top: 10px;" (click)="calculate();">Calculate</button>
+                </form>
+            </div>
+        </form>
+    </div>
+
+    <div style="width: auto; float: right; margin-right:80px;">
+        <h1>Holaaaa</h1>
+    </div>
+    
+</div>
