@@ -14,6 +14,8 @@ import { TotalPivotGaussianEliminationComponent } from './total-pivot-gaussian-e
 import { DoolittleComponent } from './doolittle/doolittle.component';
 import { CroutComponent } from './crout/crout.component';
 import { CholeskyComponent } from './cholesky/cholesky.component';
+import { GaussSeidelComponent} from './gauss-seidel/gauss-seidel.component';
+import { JacobiComponent } from './jacobi/jacobi.component';
 import { LagrangeComponent } from './lagrange/lagrange.component';
 import { NewtonInterpolationComponent } from './newton-interpolation/newton-interpolation.component';
 import { Dif2PointsComponent } from './dif2-points/dif2-points.component';
@@ -78,6 +80,14 @@ const routes: Routes = [
   {
     path: 'cholesky',
     component: CholeskyComponent
+  },
+  {
+    path: 'gauss-seidel',
+    component: GaussSeidelComponent
+  },
+  {
+    path: 'jacobi',
+    component: JacobiComponent
   },
   {
     path: 'lagrange',

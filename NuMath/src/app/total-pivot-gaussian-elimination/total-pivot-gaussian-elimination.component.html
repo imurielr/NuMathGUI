@@ -1,1 +1,43 @@
-<p>total-pivot-gaussian-elimination works!</p>
+<h1 id=methodTitle>{{ title }}</h1>
+
+<p id=helper>In the Gaussian elimination with total pivot the major element is sought in each stage k, 
+             among the elements that correspond to the submatrix, which results from eliminating rows R1
+             through Rk-1   and columns from C1  to Ck-1 in matrix Ab, independent terms are not taken into account.
+             When the largest number of these elements is found, the row and column changes are made where it is located in the Abkk position. 
+             Endally, the total pivot places the largest values ​​of each submatrix on the diagonal. The multipliers maintain the same property of the partial pivot
+             where they are less than or equal to 1, but the probability that they are less is much greater than the partial pivot.
+        
+</p>
+
+<div style=" margin-left: 3%; margin-right: 3%; margin-top: 8%;">
+
+    <div id="scrolltable" style="width: 48%; float: left; margin-left: 80px;">
+        <form style="width: 40%;">
+            <div class="form-container" *ngIf="!showTable">
+                <mat-form-field style="margin-bottom: 4px;">
+                    <input id="n" matInput placeholder="Number of Equations" type="number" [formControl]="n_control" required>
+                    <mat-error *ngIf="n_control.invalid">{{getErrorMessage()}}</mat-error>
+                </mat-form-field>
+                <button mat-raised-button color="primary" style="width: min-content;" (click)="showMatrix();">Enter Matrix</button>
+            </div>
+            <br>
+            <div *ngIf="showTable">
+                <button mat-icon-button (click)="showTable=false;"><mat-icon>arrow_back</mat-icon></button>
+                <h4> Please enter augmented matrix </h4>
+                <form>
+                    <table id="matrix">
+                        <tr *ngFor="let row of data; index as i" id="row{{i+1}}">
+                            <td *ngFor="let column of data; index as j"><input class="cell" id="cell{{i+1}}{{j+1}}" type="number" required></td>
+                        </tr>
+                    </table>
+                    <button mat-raised-button color="primary" style="width: min-content; margin-top: 10px;" (click)="calculate();">Calculate</button>
+                </form>
+            </div>
+        </form>
+    </div>
+
+    <div style="width: auto; float: right; margin-right:80px;">
+        <h1>Holaaaa</h1>
+    </div>
+    
+</div>

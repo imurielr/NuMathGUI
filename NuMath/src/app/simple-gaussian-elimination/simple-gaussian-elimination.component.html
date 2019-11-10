@@ -9,9 +9,9 @@
              every unknown in the system.
 </p>
 
-<div style=" margin-left: 3%; margin-right: 3%;">
+<div style=" margin-left: 3%; margin-right: 3%; margin-top: 10%;">
 
-    <div id="scrolltable" style="width: 48%; float: left;">
+    <div id="scrolltable" style="width: 48%; float: left; margin-left: 80px;">
         <form style="width: 40%;">
             <div class="form-container" *ngIf="!showTable">
                 <mat-form-field style="margin-bottom: 4px;">
@@ -23,19 +23,20 @@
             <br>
             <div *ngIf="showTable">
                 <button mat-icon-button (click)="showTable=false;"><mat-icon>arrow_back</mat-icon></button>
+                <h4> Please enter augmented matrix </h4>
                 <form>
                     <table id="matrix">
                         <tr *ngFor="let row of data; index as i" id="row{{i+1}}">
                             <td *ngFor="let column of data; index as j"><input class="cell" id="cell{{i+1}}{{j+1}}" type="number" required></td>
                         </tr>
                     </table>
-                    <button mat-raised-button color="primary" style="width: min-content;" (click)="calculate();">Calculate</button>
+                    <button mat-raised-button color="primary" style="width: min-content; margin-top: 10px;" (click)="calculate();">Calculate</button>
                 </form>
             </div>
         </form>
     </div>
 
-    <div style="width: 48%; float: right;">
+    <div style="width: auto; float: right; margin-right:80px;">
         <h1>Holaaaa</h1>
     </div>
     

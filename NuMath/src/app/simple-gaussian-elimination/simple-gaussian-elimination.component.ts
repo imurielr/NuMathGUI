@@ -20,7 +20,9 @@ export class SimpleGaussianEliminationComponent implements OnInit {
   title = 'Simple Gaussian Elimination';
   numEq = 0;
   data;
+  returningData;
   showTable = false;
+  num;
 
   showMatrix() {
     if (this.n_control.invalid){
@@ -34,15 +36,19 @@ export class SimpleGaussianEliminationComponent implements OnInit {
     else {
       this.numEq = Number((document.getElementById('n') as HTMLInputElement).value);
       this.data = Array(Number(this.numEq));
+      this.returningData = new Array();  
       this.showTable = true; 
     }
   }
 
   calculate() {
+    //We clear the Array
+    this.returningData = [];
+    //Then we calculate a new one
     for (let i = 1; i < Number(this.numEq) + 1; i++){
       for (let j = 1; j < Number(this.numEq) + 1; j++){
         let cell = (document.getElementById('cell'+i+''+j) as HTMLInputElement).value
-        console.log(cell)
+        this.returningData.push(cell)
       }
     }
   }

@@ -36,6 +36,8 @@ import { SimpleSimpson13Component } from './simple-simpson13/simple-simpson13.co
 import { GeneralSimpson13Component } from './general-simpson13/general-simpson13.component';
 import { SimpleSimpson38Component } from './simple-simpson38/simple-simpson38.component';
 import { GeneralSimpson38Component } from './general-simpson38/general-simpson38.component';
+import { JacobiComponent } from './jacobi/jacobi.component';
+import { GaussSeidelComponent } from './gauss-seidel/gauss-seidel.component';
 
 
 @NgModule({
@@ -64,7 +66,9 @@ import { GeneralSimpson38Component } from './general-simpson38/general-simpson38
     SimpleSimpson13Component,
     GeneralSimpson13Component,
     SimpleSimpson38Component,
-    GeneralSimpson38Component
+    GeneralSimpson38Component,
+    JacobiComponent,
+    GaussSeidelComponent
   ],
   imports: [
     BrowserModule,
