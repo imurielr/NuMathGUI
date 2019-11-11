@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
 import {MatSnackBar} from '@angular/material/snack-bar';
 
+import { HttpClient } from '@angular/common/http';
+
+
 @Component({
   selector: 'app-incremental-search',
   templateUrl: './incremental-search.component.html',
@@ -9,7 +12,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 })
 export class IncrementalSearchComponent implements OnInit {
 
-  constructor(private _snackBar: MatSnackBar) { }
+  constructor(private http: HttpClient, private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
   }
@@ -88,9 +91,22 @@ export class IncrementalSearchComponent implements OnInit {
       // plotFunction(expr, [15, 100, -20, 20]); // range to plot as [Xstart, Xend, Ystart, Yend]
 
       plotFunction(expr, [0, Math.PI * 4, -10, 10]); // range to plot as [Xstart, Xend, Ystart, Yend]
-
     }
+    this.post(this.f, this.x0, this.delta, this.nIter);
+  }
 
+  post(func: string, x0: string, delta: string, nIter: string) {
+    const req = this.http.post(`localhost:9080`, {
+      func: func,
+      x0: x0,
+      delta: delta,
+      nIter: nIter
+    })
+    .subscribe(
+      res => {
+        console.log(res);
+      }
+    );
   }
 
   clear() {
