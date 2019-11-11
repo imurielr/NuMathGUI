@@ -8,7 +8,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
   styleUrls: ['./incremental-search.component.css']
 })
 export class IncrementalSearchComponent implements OnInit {
-  
+
   constructor(private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
@@ -18,7 +18,7 @@ export class IncrementalSearchComponent implements OnInit {
   x0_control = new FormControl('', [Validators.required]);
   delta_control = new FormControl('', [Validators.required]);
   nIter_control = new FormControl('', [Validators.required, Validators.min(1)]);
-
+  
   title = 'Incremental Search';
 
   f = '';
@@ -27,6 +27,7 @@ export class IncrementalSearchComponent implements OnInit {
   nIter = '';
 
   plot() {
+
     if(this.f_control.invalid || this.x0_control.invalid || this.delta_control.invalid || this.nIter_control.invalid){
       if(this.nIter_control.hasError('min')){
         this.openSnackBar("Please enter a valid value for the number of iterations", "Ok");
@@ -40,8 +41,57 @@ export class IncrementalSearchComponent implements OnInit {
       this.x0 = (document.getElementById('x0') as HTMLInputElement).value;
       this.delta = (document.getElementById('delta') as HTMLInputElement).value;
       this.nIter = (document.getElementById('nIter') as HTMLInputElement).value;
+      
+      var expr = new Function("x", "return " + this.f);
+
+
+      this.clear();
+
+      var canvas = ((document.getElementById('myCanvas')) as HTMLCanvasElement),
+      ctx = canvas.getContext('2d'),
+      width = canvas.width,
+      height = canvas.height,
+      plotFunction = function plotFunction(fn, range) {
+          var widthScale = (width / (range[1] - range[0])),
+              heightScale = (height / (range[3] - range[2])),
+              first = true;
+
+          ctx.beginPath();
+
+          for (var x = 0; x < width; x++) {
+              var xFnVal = (x / widthScale) - range[0],
+                  yGVal = (fn(xFnVal) - range[2]) * heightScale;
+
+              yGVal = height - yGVal; // 0,0 is top-left
+
+              if (first) {
+                  ctx.moveTo(x, yGVal);
+                  first = false;
+              }
+              else {
+                  ctx.lineTo(x, yGVal);
+              }
+          }
+
+          ctx.strokeStyle = "red";
+          ctx.lineWidth = 3;
+          ctx.stroke();
+      };
+      plotFunction(expr, [0, Math.PI * 4, -10, 10]); // range to plot as [Xstart, Xend, Ystart, Yend]
+      // plotFunction(
+      //             function(x) {
+      //                           // return Math.log(x);
+      //                           return expr;
+      //             },
+      //             [0, Math.PI * 4, -4, 4]);  // range to plot as [Xstart, Xend, Ystart, Yend]
     }
-    
+
+  }
+
+  clear() {
+    var canvas = ((document.getElementById('myCanvas')) as HTMLCanvasElement);
+    var ctx = canvas.getContext('2d');
+    ctx.clearRect(0,0,canvas.width,canvas.height);
   }
 
   getErrorMessage(type: string) {
@@ -56,11 +106,11 @@ export class IncrementalSearchComponent implements OnInit {
           return this.delta_control.hasError('required') ? 'You must enter a value' : '';
           break;
       case "nIter":
-          return this.nIter_control.hasError('required') ? 'You must enter a value' : 
-                 this.nIter_control.hasError('min') ? 'The number of iterations must be bigger than 1' : 
+          return this.nIter_control.hasError('required') ? 'You must enter a value' :
+                 this.nIter_control.hasError('min') ? 'The number of iterations must be bigger than 1' :
                  '';
           break;
-    } 
+    }
   }
 
   openSnackBar(message: string, action: string) {
