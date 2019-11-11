@@ -54,17 +54,13 @@
     </div>
 
     <div style="width: 48%; float: right;">
-        <a style="font-size: large;">Function: </a> <a>{{f}}</a>
-        <br><br>
-        <a style="font-size: large;">g Function: </a> <a>{{g}}</a>
-        <br><br>
-        <a style="font-size: large;">Xa: </a> <a>{{xa}}</a>
-        <br><br>
-        <a style="font-size: large;">Number of Iterations: </a> <a>{{nIter}}</a>
-        <br><br>
-        <a style="font-size: large;">Tolerance: </a> <a>{{tolerance}}</a>
-        <br><br>
-        <a style="font-size: large;">Error Type: </a> <a>{{error}}</a>
+
+        <canvas id="myCanvas" width="1000px" height="600px"></canvas>
+        <p *ngIf="show"><mat-icon style="color: red;">linear_scale</mat-icon> F Function 
+           <mat-icon style="color: blue;">linear_scale</mat-icon> G Function 
+           <mat-icon style="color: green;">linear_scale</mat-icon> y = x
+        </p>
+
 
     </div>
     

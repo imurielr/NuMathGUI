@@ -1,1 +1,45 @@
-<p>dif2-points works!</p>
+<h1 id=methodTitle>{{ title }}</h1>
+
+<p id=helper>
+</p>
+
+<div style=" margin-left: 3%; margin-right: 3%;">
+
+    <div id="scrolltable" style="width: 48%; float: left;">
+        <form style="width: 40%; margin-left: 80px;">
+            <div>
+                <form>
+                    <h4> Please enter points (x , y)</h4>
+                    <table id="matrix">
+                        <tr *ngFor="let row of [0,1]" id="row{{row+1}}">
+                            <p> Point {{row+1}} </p>
+                            <td *ngFor="let number of [0,1]"><input class="cell" id="cell{{row+1}}{{number}}" type="number" required></td>
+                        </tr>
+                    </table>
+                    <mat-form-field style="margin-bottom: 6px;">
+                        <mat-label>Direction</mat-label>
+                        <mat-select matNativeControl [formControl]="direction_control" required [(value)]=direction>
+                            <mat-option *ngFor="let direction of directionTypes" [value]="direction">
+                                {{direction}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="direction_control.invalid">{{getErrorMessage("dir")}}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field  style="margin-bottom: 6px;">
+                        <input id="h" matInput type="number" placeholder="h" [formControl]="h_control" required>
+                        <mat-error *ngIf="h_control.invalid">{{getErrorMessage("h")}}</mat-error>
+                    </mat-form-field>
+
+                    
+                    <button mat-raised-button color="primary" style="width: min-content; margin-top: 10px;" (click)="calculate();">Calculate</button>
+                </form>
+            </div>
+        </form>
+    </div>
+
+    <div style="width: 48%; float: right;">
+        <h1>Holaaaa</h1>
+    </div>
+    
+</div>

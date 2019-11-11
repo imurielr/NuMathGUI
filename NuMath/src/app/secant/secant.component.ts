@@ -51,8 +51,102 @@ export class SecantComponent implements OnInit {
       this.x1 = (document.getElementById('x1') as HTMLInputElement).value;
       this.nIter = (document.getElementById('nIter') as HTMLInputElement).value;
       this.tolerance = (document.getElementById('tol') as HTMLInputElement).value;
-      // this.error = (document.getElementById('error') as HTMLInputElement).value;
+      
+      let func = this.f;
+      
+      func = func.replace("sin", "Math.sin");
+      func = func.replace("cos", "Math.cos");
+      func = func.replace("exp", "Math.exp");
+      func = func.replace("log", "Math.log");
+      func = func.replace("sqrt", "Math.sqrt");
+      func = func.replace("pow", "Math.pow");
+
+      var expr = new Function("x", "return " + func);  // Create functin to plot
+
+      this.clear();   // Clear canvas to draw a new function
+
+      var canvas = ((document.getElementById('myCanvas')) as HTMLCanvasElement),
+      ctx = canvas.getContext('2d'),
+      width = canvas.width,
+      height = canvas.height,
+      plotFunction = function plotFunction(fn, range) {
+          var widthScale = (width / (range[1] - range[0])),
+              heightScale = (height / (range[3] - range[2])),
+              first = true;
+
+          ctx.beginPath();
+
+          for (var x = 0; x < width; x++) {
+              var xFnVal = (x / widthScale) - range[0],
+                  yGVal = (fn(xFnVal) - range[2]) * heightScale;
+
+              yGVal = height - yGVal; // 0,0 is top-left
+
+              if (first) {
+                  ctx.moveTo(x, yGVal);
+                  first = false;
+              }
+              else {
+                  ctx.lineTo(x, yGVal);
+              }
+          }
+
+          ctx.strokeStyle = "red";
+          ctx.lineWidth = 3;
+          ctx.stroke();
+      };
+      // plotFunction(expr, [15, 100, -20, 20]); // range to plot as [Xstart, Xend, Ystart, Yend]
+
+      plotFunction(expr, [0, Math.PI * 4, -10, 10]); // range to plot as [Xstart, Xend, Ystart, Yend]
+
     }
+
+  }
+
+  clear() {
+    var canvas = ((document.getElementById('myCanvas')) as HTMLCanvasElement);
+    var ctx = canvas.getContext('2d');
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    var exprY = new Function("return 0");
+
+    var canvas = ((document.getElementById('myCanvas')) as HTMLCanvasElement);
+    var ctx = canvas.getContext('2d');
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    var canvas = ((document.getElementById('myCanvas')) as HTMLCanvasElement),
+    ctx = canvas.getContext('2d'),
+    width = canvas.width,
+    height = canvas.height,
+    plotFunction = function plotFunction(fn, range, color) {
+        var widthScale = (width / (range[1] - range[0])),
+            heightScale = (height / (range[3] - range[2])),
+            first = true;
+
+        ctx.beginPath();
+
+        for (var x = 0; x < width; x++) {
+            var xFnVal = (x / widthScale) - range[0],
+                yGVal = (fn(xFnVal) - range[2]) * heightScale;
+
+            yGVal = height - yGVal; // 0,0 is top-left
+
+            if (first) {
+                ctx.moveTo(x, yGVal);
+                first = false;
+            }
+            else {
+                ctx.lineTo(x, yGVal);
+            }
+        }
+
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 3;
+        ctx.stroke();
+    };
+    // plotFunction(expr, [15, 100, -20, 20]); // range to plot as [Xstart, Xend, Ystart, Yend]
+
+    plotFunction(exprY, [0, Math.PI * 4, -20, 20], "black"); // range to plot as [Xstart, Xend, Ystart, Yend]
   }
 
   getErrorMessage(type: string) {

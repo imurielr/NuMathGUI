@@ -34,6 +34,7 @@ export class FixedPointComponent implements OnInit {
   nIter = '';
   tolerance = '';
   error = '';
+  show = false;
 
   plot() {
     if(this.f_control.invalid || this.g_control.invalid || this.xa_control.invalid || this.nIter_control.invalid || this.tol_control.invalid || this.error_control.invalid){
@@ -50,8 +51,111 @@ export class FixedPointComponent implements OnInit {
       this.xa = (document.getElementById('xa') as HTMLInputElement).value;
       this.nIter = (document.getElementById('nIter') as HTMLInputElement).value;
       this.tolerance = (document.getElementById('tol') as HTMLInputElement).value;
-      // this.error = (document.getElementById('error') as HTMLInputElement).value;
+      
+      let func = this.f;
+      let g_func = this.g;
+      
+      func = func.replace("sin", "Math.sin");
+      func = func.replace("cos", "Math.cos");
+      func = func.replace("exp", "Math.exp");
+      func = func.replace("log", "Math.log");
+      func = func.replace("sqrt", "Math.sqrt");
+      func = func.replace("pow", "Math.pow");
+
+      g_func = g_func.replace("sin", "Math.sin");
+      g_func = g_func.replace("cos", "Math.cos");
+      g_func = g_func.replace("exp", "Math.exp");
+      g_func = g_func.replace("log", "Math.log");
+      g_func = g_func.replace("sqrt", "Math.sqrt");
+      g_func = g_func.replace("pow", "Math.pow");
+
+      var exprF = new Function("x", "return " + func);  // Create functin to plot
+      var exprG = new Function("x", "return " + g_func);
+      var exprX = new Function("x", "return x");
+
+      this.clear();   // Clear canvas to draw a new function
+
+      var canvas = ((document.getElementById('myCanvas')) as HTMLCanvasElement),
+      ctx = canvas.getContext('2d'),
+      width = canvas.width,
+      height = canvas.height,
+      plotFunction = function plotFunction(fn, range, color) {
+          var widthScale = (width / (range[1] - range[0])),
+              heightScale = (height / (range[3] - range[2])),
+              first = true;
+
+          ctx.beginPath();
+
+          for (var x = 0; x < width; x++) {
+              var xFnVal = (x / widthScale) - range[0],
+                  yGVal = (fn(xFnVal) - range[2]) * heightScale;
+
+              yGVal = height - yGVal; // 0,0 is top-left
+
+              if (first) {
+                  ctx.moveTo(x, yGVal);
+                  first = false;
+              }
+              else {
+                  ctx.lineTo(x, yGVal);
+              }
+          }
+
+          ctx.strokeStyle = color;
+          ctx.lineWidth = 3;
+          ctx.stroke();
+      };
+      // plotFunction(expr, [15, 100, -20, 20]); // range to plot as [Xstart, Xend, Ystart, Yend]
+
+      plotFunction(exprF, [0, Math.PI * 4, -10, 10], "red"); // range to plot as [Xstart, Xend, Ystart, Yend]
+      plotFunction(exprG, [0, Math.PI * 4, -10, 10], "blue"); // range to plot as [Xstart, Xend, Ystart, Yend]
+      plotFunction(exprX, [0, Math.PI * 4, -10, 10], "green"); // range to plot as [Xstart, Xend, Ystart, Yend]
+
+      this.show = true;
     }
+
+  }
+
+  clear() {
+    var exprY = new Function("return 0");
+
+    var canvas = ((document.getElementById('myCanvas')) as HTMLCanvasElement);
+    var ctx = canvas.getContext('2d');
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    var canvas = ((document.getElementById('myCanvas')) as HTMLCanvasElement),
+    ctx = canvas.getContext('2d'),
+    width = canvas.width,
+    height = canvas.height,
+    plotFunction = function plotFunction(fn, range, color) {
+        var widthScale = (width / (range[1] - range[0])),
+            heightScale = (height / (range[3] - range[2])),
+            first = true;
+
+        ctx.beginPath();
+
+        for (var x = 0; x < width; x++) {
+            var xFnVal = (x / widthScale) - range[0],
+                yGVal = (fn(xFnVal) - range[2]) * heightScale;
+
+            yGVal = height - yGVal; // 0,0 is top-left
+
+            if (first) {
+                ctx.moveTo(x, yGVal);
+                first = false;
+            }
+            else {
+                ctx.lineTo(x, yGVal);
+            }
+        }
+
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 3;
+        ctx.stroke();
+    };
+    // plotFunction(expr, [15, 100, -20, 20]); // range to plot as [Xstart, Xend, Ystart, Yend]
+
+    plotFunction(exprY, [0, Math.PI * 4, -20, 20], "black"); // range to plot as [Xstart, Xend, Ystart, Yend]
   }
 
   getErrorMessage(type: string) {

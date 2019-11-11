@@ -24,11 +24,8 @@ import { CubicSplineComponent } from './cubic-spline/cubic-spline.component';
 import { Dif2PointsComponent } from './dif2-points/dif2-points.component';
 import { Dif3PointsComponent } from './dif3-points/dif3-points.component';
 import { Dif5PointsComponent } from './dif5-points/dif5-points.component';
-import { SimpleTrapeziumComponent } from './simple-trapezium/simple-trapezium.component';
 import { GeneralTrapeziumComponent } from './general-trapezium/general-trapezium.component';
-import { SimpleSimpson13Component } from './simple-simpson13/simple-simpson13.component';
 import { GeneralSimpson13Component } from './general-simpson13/general-simpson13.component';
-import { SimpleSimpson38Component } from './simple-simpson38/simple-simpson38.component';
 import { GeneralSimpson38Component } from './general-simpson38/general-simpson38.component';
 
 const routes: Routes = [
@@ -101,7 +98,7 @@ const routes: Routes = [
     component: NewtonInterpolationComponent
   },
   {
-    path: 'simpleSpline',
+    path: 'linearSpline',
     component: SimpleSplineComponent
   },
   {
@@ -125,24 +122,12 @@ const routes: Routes = [
     component: Dif5PointsComponent
   },
   {
-    path: 'simpleTrapezium',
-    component: SimpleTrapeziumComponent
-  },
-  {
     path: 'generalTrapezium',
     component: GeneralTrapeziumComponent
   },
   {
-    path: 'simpleSimpson_1_3',
-    component: SimpleSimpson13Component
-  },
-  {
     path: 'generalSimpson_1_3',
     component: GeneralSimpson13Component
-  },
-  {
-    path: 'simpleSimpson_3_8',
-    component: SimpleSimpson38Component
   },
   {
     path: 'generalSimpson_3_8',

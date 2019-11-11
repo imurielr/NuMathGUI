@@ -33,11 +33,8 @@ import { CubicSplineComponent } from './cubic-spline/cubic-spline.component';
 import { Dif2PointsComponent } from './dif2-points/dif2-points.component';
 import { Dif3PointsComponent } from './dif3-points/dif3-points.component';
 import { Dif5PointsComponent } from './dif5-points/dif5-points.component';
-import { SimpleTrapeziumComponent } from './simple-trapezium/simple-trapezium.component';
 import { GeneralTrapeziumComponent } from './general-trapezium/general-trapezium.component';
-import { SimpleSimpson13Component } from './simple-simpson13/simple-simpson13.component';
 import { GeneralSimpson13Component } from './general-simpson13/general-simpson13.component';
-import { SimpleSimpson38Component } from './simple-simpson38/simple-simpson38.component';
 import { GeneralSimpson38Component } from './general-simpson38/general-simpson38.component';
 import { JacobiComponent } from './jacobi/jacobi.component';
 import { GaussSeidelComponent } from './gauss-seidel/gauss-seidel.component';
@@ -67,11 +64,8 @@ import { GaussSeidelComponent } from './gauss-seidel/gauss-seidel.component';
     Dif2PointsComponent,
     Dif3PointsComponent,
     Dif5PointsComponent,
-    SimpleTrapeziumComponent,
     GeneralTrapeziumComponent,
-    SimpleSimpson13Component,
     GeneralSimpson13Component,
-    SimpleSimpson38Component,
     GeneralSimpson38Component,
     JacobiComponent,
     GaussSeidelComponent

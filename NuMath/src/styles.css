@@ -28,3 +28,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     height: 35px; 
     font-size: medium;
 }
+
+canvas {
+    border: 1px solid black;
+    /* border: 1px black; */
+    width: 500px;
+    height: 300px;
+}
