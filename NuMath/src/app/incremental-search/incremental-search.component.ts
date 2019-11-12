@@ -21,6 +21,10 @@ export class IncrementalSearchComponent implements OnInit {
   x0_control = new FormControl('', [Validators.required]);
   delta_control = new FormControl('', [Validators.required]);
   nIter_control = new FormControl('', [Validators.required, Validators.min(1)]);
+  firstNum = '';
+  secondNum = '';
+  show = false;
+  error = false;
   
   title = 'Incremental Search';
 
@@ -30,6 +34,9 @@ export class IncrementalSearchComponent implements OnInit {
   nIter = '';
 
   plot() {
+
+    this.show = false;
+    this.error = false;
 
     if(this.f_control.invalid || this.x0_control.invalid || this.delta_control.invalid || this.nIter_control.invalid){
       if(this.nIter_control.hasError('min')){
@@ -97,7 +104,7 @@ export class IncrementalSearchComponent implements OnInit {
 
   post(func: string, x0: Number, delta: Number, nIter: Number) {
 
-    const req = this.http.post(`/methods`, JSON.stringify({
+    const req = this.http.post(`/methods/incrSearch`, JSON.stringify({
       func: func,
       x0: x0,
       delta: delta,
@@ -110,7 +117,14 @@ export class IncrementalSearchComponent implements OnInit {
     })
     .subscribe(
       res => {
-        console.log(res);
+        if (res['first'] == undefined) {
+          this.error = true;
+        }
+        else {
+          this.firstNum = res['first'];
+          this.secondNum = res['last'];
+          this.show = true;
+        }
       }
     );
   }

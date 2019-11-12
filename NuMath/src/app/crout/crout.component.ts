@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
 import {MatSnackBar} from '@angular/material/snack-bar';
 
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-crout',
@@ -10,7 +11,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 })
 export class CroutComponent implements OnInit {
 
-  constructor(private _snackBar: MatSnackBar) { }
+  constructor(private http: HttpClient, private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
   }
@@ -26,7 +27,14 @@ export class CroutComponent implements OnInit {
   showTable = false;
   num;
 
+  result;
+  show = false;
+  errorFound = false;
+
   showMatrix() {
+    this.show = false;
+    this.errorFound = false;
+
     if (this.n_control.invalid){
       if (this.n_control.hasError('min')){
         this.openSnackBar("The number of equations should be greater than 2", "Ok");
@@ -52,11 +60,39 @@ export class CroutComponent implements OnInit {
     for (let i = 1; i < Number(this.numEq) + 1; i++){
       for (let j = 1; j < Number(this.numEq) + 1; j++){
         let cell = (document.getElementById('cell'+i+''+j) as HTMLInputElement).value
-        this.returningDataMatrix.push(cell)
+        this.returningDataMatrix.push(Number(cell))
       }
       let b = (document.getElementById('b'+i) as HTMLInputElement).value
-      this.returningDataB.push(b)
+      this.returningDataB.push(Number(b))
     }
+    this.post(Number(this.numEq), this.returningDataMatrix, this.returningDataB);
+  }
+
+  post(numEq: Number, dataA, dataB) {
+
+    const req = this.http.post(`/methods/crout`, JSON.stringify({
+      numEq: numEq,
+      numsA: dataA,
+      numsB: dataB
+    }),
+    {
+      headers:{
+        'Content-Type': 'application/json',
+      }
+    })
+    .subscribe(
+      res => {
+        if (res['error'] == undefined) {
+          this.result = res['results'];
+          this.show = true;
+        }
+        else {
+          this.result = res['error'];
+          this.errorFound = true;
+        }
+      }
+    )
+
   }
 
   getErrorMessage() {

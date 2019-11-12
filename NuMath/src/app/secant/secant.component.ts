@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
 import {MatSnackBar} from '@angular/material/snack-bar';
 
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-secant',
@@ -10,7 +11,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 })
 export class SecantComponent implements OnInit {
 
-  constructor(private _snackBar: MatSnackBar) { }
+  constructor(private http: HttpClient, private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
   }
@@ -28,6 +29,9 @@ export class SecantComponent implements OnInit {
   error_control = new FormControl('', [Validators.required]);
 
   title = 'Secant';
+  result = '';
+  show = false;
+  errorFound = false;
 
   f = '';
   x0 = '';
@@ -37,6 +41,9 @@ export class SecantComponent implements OnInit {
   error = '';
 
   plot() {
+    this.show = false;
+    this.errorFound = false;
+
     if(this.f_control.invalid || this.x0_control.invalid || this.x1_control.invalid || this.nIter_control.invalid || this.tol_control.invalid || this.error_control.invalid){
       if(this.nIter_control.hasError('min')){
         this.openSnackBar("Please enter a valid value for the number of iterations", "Ok");
@@ -100,6 +107,36 @@ export class SecantComponent implements OnInit {
       plotFunction(expr, [0, Math.PI * 4, -10, 10]); // range to plot as [Xstart, Xend, Ystart, Yend]
 
     }
+    this.post(this.f, Number(this.x0), Number(this.x1), Number(this.nIter), Number(this.tolerance), this.error);
+  }
+
+  post(func: string, x0: Number, x1: Number, nIter: Number, tol: Number, error: String) {
+
+    const req = this.http.post(`/methods/secant`, JSON.stringify({
+      func: func,
+      x0: x0,
+      x1: x1,
+      nIter: nIter,
+      tol: tol,
+      err: error
+    }),
+    {
+      headers:{
+        'Content-Type': 'application/json',
+      }
+    })
+    .subscribe(
+      res => {
+        if (res['error'] == undefined) {
+          this.result = res['root'];
+          this.show = true;
+        }
+        else {
+          this.result = res['error'];
+          this.errorFound = true;
+        }
+      }
+    )
 
   }
 

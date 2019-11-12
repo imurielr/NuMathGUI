@@ -39,6 +39,10 @@
     <div id="scrolltable" style="width: 48%; float: right;">
 
         <canvas id="myCanvas" width="1000px" height="600px"></canvas>
+        <br>
+        <p *ngIf="firstNum!=secondNum && show">There is a root between {{firstNum}} and {{secondNum}}</p>
+        <p *ngIf="firstNum==secondNum && show">The root is {{firstNum}}</p>
+        <p *ngIf="error">Error: Could not find anything!</p>
 
     </div>
     

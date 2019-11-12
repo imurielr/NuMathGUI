@@ -27,7 +27,7 @@
                 <form>
                     <table id="matrix">
                         <tr *ngFor="let row of data; index as i" id="row{{i+1}}">
-                            <td *ngFor="let column of data; index as j"><input class="cell" id="cell{{i+1}}{{j+1}}" type="number" required></td>
+                            <td *ngFor="let column of columns; index as j"><input class="cell" id="cell{{i+1}}{{j+1}}" type="number" required></td>
                         </tr>
                     </table>
                     <button mat-raised-button color="primary" style="width: min-content; margin-top: 10px;" (click)="calculate();">Calculate</button>
@@ -37,7 +37,12 @@
     </div>
 
     <div style="width: 48%; float: right;">
-        <h1>Holaaaa</h1>
+        <div *ngIf="show">
+            <h4 >Results: </h4> 
+            <p *ngFor="let res of result; index as i">X{{i}} = {{res}}</p>
+        </div>
+        <p *ngIf="errorFound">Error: {{result}}</p>
+
     </div>
     
 </div>

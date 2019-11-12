@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
 import {MatSnackBar} from '@angular/material/snack-bar';
 
+import { HttpClient } from '@angular/common/http';
+
+
 @Component({
   selector: 'app-gauss-seidel',
   templateUrl: './gauss-seidel.component.html',
@@ -9,7 +12,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 })
 export class GaussSeidelComponent implements OnInit {
 
-  constructor(private _snackBar: MatSnackBar) { }
+  constructor(private http: HttpClient, private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
   }
@@ -22,6 +25,7 @@ export class GaussSeidelComponent implements OnInit {
   n_control = new FormControl('', [Validators.required, Validators.min(2)]);
   nIter_control = new FormControl('', [Validators.required, Validators.min(1)]);
   tol_control = new FormControl('', [Validators.required]);
+  lambda_control = new FormControl('', [Validators.required, Validators.min(0), Validators.max(1)]);
   error_control = new FormControl('', [Validators.required]);
 
 
@@ -35,12 +39,24 @@ export class GaussSeidelComponent implements OnInit {
   num;
   nIter = '';
   tolerance = '';
+  lambda;
   error = '';
 
+  result;
+  show = false;
+  errorFound = false;
+
   showMatrix() {
+    this.show = false;
+    this.errorFound = false;
+
+
     if (this.n_control.invalid) {
       if (this.n_control.hasError('min')) {
         this.openSnackBar("The number of equations should be greater than 2", "Ok");
+      }
+      else if (this.lambda_control.hasError('min') || this.lambda_control.hasError('max')) {
+        this.openSnackBar("Lambda shoud be a number between 0 and 1", "Ok");
       }
       else {
         this.openSnackBar("Please enter the number of equations", "Ok");
@@ -57,7 +73,7 @@ export class GaussSeidelComponent implements OnInit {
   }
 
   calculate() {
-    if (this.nIter_control.invalid || this.tol_control.invalid || this.error_control.invalid) {
+    if (this.nIter_control.invalid || this.tol_control.invalid || this.lambda_control.invalid || this.error_control.invalid) {
       if (this.nIter_control.hasError('min')) {
         this.openSnackBar("Please enter a valid value for the number of iterations", "Ok");
       }
@@ -73,26 +89,56 @@ export class GaussSeidelComponent implements OnInit {
       //We get values
       this.nIter = (document.getElementById('nIter') as HTMLInputElement).value;
       this.tolerance = (document.getElementById('tol') as HTMLInputElement).value;
+      this.lambda = (document.getElementById('lambda') as HTMLInputElement).value;
       //this.error = (document.getElementById('error') as HTMLInputElement).value;
       //Then we calculate them
       for (let i = 1; i < Number(this.numEq) + 1; i++) {
         //Calculate Initial Values
         let initial = (document.getElementById('initial' + i) as HTMLInputElement).value
-        this.returningDataInitial.push(initial)
+        this.returningDataInitial.push(Number(initial))
         //Calculate A Matrix
         for (let j = 1; j < Number(this.numEq) + 1; j++) {
           let cell = (document.getElementById('cell' + i + '' + j) as HTMLInputElement).value
-          this.returningDataMatrix.push(cell)
+          this.returningDataMatrix.push(Number(cell))
         }
         //Calculate Independent Values
         let b = (document.getElementById('b' + i) as HTMLInputElement).value
-        this.returningDataB.push(b)
+        this.returningDataB.push(Number(b))
       }
     }
+    this.post(Number(this.numEq), Number(this.nIter), Number(this.tolerance), Number(this.lambda), this.error, this.returningDataInitial, this.returningDataMatrix, this.returningDataB);    
+  }
 
-    // console.log(this.nIter);
-    // console.log(this.tolerance);
-    // console.log(this.error);
+  post(numEq: Number, nIter: Number, tol: Number, lambda: Number, error: string, init, dataA, dataB) {
+
+    const req = this.http.post(`/methods/gaussSeidel`, JSON.stringify({
+      numEq: numEq,
+      nIter: nIter,
+      tol: tol,
+      lambda: lambda,
+      err: error,
+      initVals: init,
+      numsA: dataA,
+      numsB: dataB
+    }),
+    {
+      headers:{
+        'Content-Type': 'application/json',
+      }
+    })
+    .subscribe(
+      res => {
+        if (res['error'] == undefined) {
+          this.result = res['results'];
+          this.show = true;
+        }
+        else {
+          this.result = res['error'];
+          this.errorFound = true;
+        }
+      }
+    )
+
   }
 
   getErrorMessage(type: string) {
@@ -110,6 +156,12 @@ export class GaussSeidelComponent implements OnInit {
       case "tol":
         return this.tol_control.hasError('required') ? 'You must enter a value' : '';
         break;
+      case "lambda":
+          return this.lambda_control.hasError('required') ? 'You must enter a value' :
+            this.lambda_control.hasError('min') ? 'Lambda shoud be a number between 0 and 1' : 
+            this.lambda_control.hasError('max') ? 'Lambda shoud be a number between 0 and 1' : 
+            '';
+          break;
       case "error":
         return this.error_control.hasError('required') ? 'You must enter a value' : '';
         break;

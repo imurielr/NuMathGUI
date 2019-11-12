@@ -61,6 +61,10 @@
            <mat-icon style="color: green;">linear_scale</mat-icon> y = x
         </p>
 
+        <br>
+        <p *ngIf="showResult">The root is {{result}}</p>
+        <p *ngIf="errorFound">Error: {{result}}</p>
+
 
     </div>
     

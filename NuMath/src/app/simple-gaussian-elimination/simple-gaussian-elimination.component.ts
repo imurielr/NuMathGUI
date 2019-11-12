@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
 import {MatSnackBar} from '@angular/material/snack-bar';
 
+import { HttpClient } from '@angular/common/http';
+
 @Component({
   selector: 'app-simple-gaussian-elimination',
   templateUrl: './simple-gaussian-elimination.component.html',
@@ -9,7 +11,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 })
 export class SimpleGaussianEliminationComponent implements OnInit {
 
-  constructor(private _snackBar: MatSnackBar) { }
+  constructor(private http: HttpClient, private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
   }
@@ -19,12 +21,20 @@ export class SimpleGaussianEliminationComponent implements OnInit {
 
   title = 'Simple Gaussian Elimination';
   numEq = 0;
+  columns;
   data;
   returningData;
   showTable = false;
   num;
 
+  result;
+  show = false;
+  errorFound = false;
+
   showMatrix() {
+    this.show = false;
+    this.errorFound = false;
+
     if (this.n_control.invalid){
       if (this.n_control.hasError('min')){
         this.openSnackBar("The number of equations should be greater than 2", "Ok");
@@ -35,6 +45,7 @@ export class SimpleGaussianEliminationComponent implements OnInit {
     }
     else {
       this.numEq = Number((document.getElementById('n') as HTMLInputElement).value);
+      this.columns = Array(Number(this.numEq+1));
       this.data = Array(Number(this.numEq));
       this.returningData = new Array();  
       this.showTable = true; 
@@ -46,11 +57,38 @@ export class SimpleGaussianEliminationComponent implements OnInit {
     this.returningData = [];
     //Then we calculate a new one
     for (let i = 1; i < Number(this.numEq) + 1; i++){
-      for (let j = 1; j < Number(this.numEq) + 1; j++){
+      for (let j = 1; j <= Number(this.numEq) + 1; j++){
         let cell = (document.getElementById('cell'+i+''+j) as HTMLInputElement).value
-        this.returningData.push(cell)
-      }
+        this.returningData.push(Number(cell))
+      } 
     }
+    this.post(Number(this.numEq), this.returningData);
+  }
+
+  post(numEq: Number, data) {
+
+    const req = this.http.post(`/methods/SGE`, JSON.stringify({
+      numEq: numEq,
+      nums: data
+    }),
+    {
+      headers:{
+        'Content-Type': 'application/json',
+      }
+    })
+    .subscribe(
+      res => {
+        if (res['error'] == undefined) {
+          this.result = res['results'];
+          this.show = true;
+        }
+        else {
+          this.result = res['error'];
+          this.errorFound = true;
+        }
+      }
+    )
+
   }
 
   getErrorMessage() {

@@ -38,6 +38,11 @@
                 </mat-form-field>
 
                 <mat-form-field style="margin-bottom: 6px;">
+                    <input id="lambda" matInput type="number" placeholder="Lambda (If you do not want to use it set it to 1" [formControl]="lambda_control" required>
+                    <mat-error *ngIf="lambda_control.invalid">{{getErrorMessage("lambda")}}</mat-error>
+                </mat-form-field>
+
+                <mat-form-field style="margin-bottom: 6px;">
                     <mat-label>Error Type</mat-label>
                     <mat-select matNativeControl [formControl]="error_control" required [(value)]=error>
                         <mat-option *ngFor="let error of errorTypes" [value]="error">
@@ -75,7 +80,13 @@
     </div>
 
     <div style="width: 48%; float: right;">
-        <h1>Holaaaa</h1>
+
+        <div *ngIf="show">
+            <h4 >Results: </h4> 
+            <p *ngFor="let res of result; index as i">X{{i}} = {{res}}</p>
+        </div>  
+        <p *ngIf="errorFound">Error: {{result}}</p>
+
     </div>
 
 </div>

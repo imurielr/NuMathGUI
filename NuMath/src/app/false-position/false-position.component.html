@@ -57,6 +57,9 @@
     <div style="width: 48%; float: right;">
         
         <canvas id="myCanvas" width="1000px" height="600px"></canvas>
+        <br>
+        <p *ngIf="show">The root is {{result}}</p>
+        <p *ngIf="errorFound">Error: {{result}}</p>
         
     </div>
     

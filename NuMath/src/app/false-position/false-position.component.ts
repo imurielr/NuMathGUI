@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
 import {MatSnackBar} from '@angular/material/snack-bar';
 
+import { HttpClient } from '@angular/common/http';
+
 @Component({
   selector: 'app-false-position',
   templateUrl: './false-position.component.html',
@@ -9,7 +11,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 })
 export class FalsePositionComponent implements OnInit {
 
-  constructor(private _snackBar: MatSnackBar) { }
+  constructor(private http: HttpClient, private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
   }
@@ -27,6 +29,9 @@ export class FalsePositionComponent implements OnInit {
   error_control = new FormControl('', [Validators.required]);
   
   title = 'False Position';
+  result = '';
+  show = false;
+  errorFound = false;
 
   f = '';
   xi = '';
@@ -36,6 +41,9 @@ export class FalsePositionComponent implements OnInit {
   error = '';
 
   plot() {
+
+    this.show = false;
+    this.errorFound = false;
 
     if(this.f_control.invalid || this.xi_control.invalid || this.xu_control.invalid || this.nIter_control.invalid || this.tol_control.invalid || this.error_control.invalid){
       if(this.nIter_control.hasError('min')){
@@ -100,6 +108,36 @@ export class FalsePositionComponent implements OnInit {
       plotFunction(expr, [0, Math.PI * 4, -10, 10]); // range to plot as [Xstart, Xend, Ystart, Yend]
 
     }
+    this.post(this.f, Number(this.xi), Number(this.xu), Number(this.nIter), Number(this.tolerance), this.error);
+  }
+
+  post(func: string, xi: Number, xu: Number, nIter: Number, tol: Number, error: String) {
+
+    const req = this.http.post(`/methods/falsePosition`, JSON.stringify({
+      func: func,
+      xi: xi,
+      xu: xu,
+      nIter: nIter,
+      tol: tol,
+      err: error
+    }),
+    {
+      headers:{
+        'Content-Type': 'application/json',
+      }
+    })
+    .subscribe(
+      res => {
+        if (res['error'] == undefined) {
+          this.result = res['root'];
+          this.show = true;
+        }
+        else {
+          this.result = res['error'];
+          this.errorFound = true;
+        }
+      }
+    )
 
   }
 
