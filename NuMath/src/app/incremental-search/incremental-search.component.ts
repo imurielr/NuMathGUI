@@ -97,7 +97,7 @@ export class IncrementalSearchComponent implements OnInit {
 
   post(func: string, x0: Number, delta: Number, nIter: Number) {
 
-    const req = this.http.post(`http://192.186.1.113:9080/`, JSON.stringify({
+    const req = this.http.post(`/methods`, JSON.stringify({
       func: func,
       x0: x0,
       delta: delta,
@@ -105,7 +105,7 @@ export class IncrementalSearchComponent implements OnInit {
     }),
     {
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       }
     })
     .subscribe(
