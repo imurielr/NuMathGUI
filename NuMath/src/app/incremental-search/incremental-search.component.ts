@@ -92,15 +92,21 @@ export class IncrementalSearchComponent implements OnInit {
 
       plotFunction(expr, [0, Math.PI * 4, -10, 10]); // range to plot as [Xstart, Xend, Ystart, Yend]
     }
-    this.post(this.f, this.x0, this.delta, this.nIter);
+    this.post(this.f, Number(this.x0), Number(this.delta), Number(this.nIter));
   }
 
-  post(func: string, x0: string, delta: string, nIter: string) {
-    const req = this.http.post(`localhost:9080`, {
+  post(func: string, x0: Number, delta: Number, nIter: Number) {
+
+    const req = this.http.post(`http://192.186.1.113:9080/`, JSON.stringify({
       func: func,
       x0: x0,
       delta: delta,
       nIter: nIter
+    }),
+    {
+      headers: {
+        'Content-Type': 'application/json'
+      }
     })
     .subscribe(
       res => {
