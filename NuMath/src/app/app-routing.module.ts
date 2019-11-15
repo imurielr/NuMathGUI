@@ -28,6 +28,8 @@ import { GeneralTrapeziumComponent } from './general-trapezium/general-trapezium
 import { GeneralSimpson13Component } from './general-simpson13/general-simpson13.component';
 import { GeneralSimpson38Component } from './general-simpson38/general-simpson38.component';
 
+import { SingleVariableComponent } from './single-variable/single-variable.component';
+
 const routes: Routes = [
   {
     path: 'incrSearch',
@@ -133,6 +135,10 @@ const routes: Routes = [
     path: 'generalSimpson_3_8',
     component: GeneralSimpson38Component
   },
+  {
+    path: 'singleVariable',
+    component: SingleVariableComponent
+  }
 ];
 
 @NgModule({

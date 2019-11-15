@@ -1,0 +1,286 @@
+<h1 style="text-align: center;">Single Variable Equations</h1>
+<div style=" margin-left: 3%; margin-right: 3%;">
+    <div id="scrolltable" style="width: 28%; float: left;">
+        <form>
+            <div class="form-container">
+                <mat-form-field style="margin-bottom: 6px;">
+                    <mat-label>Method</mat-label>
+                    <mat-select matNativeControl [(value)]=method>
+                        <mat-option *ngFor="let method of methods" [value]="method">
+                            {{method}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field style="margin-bottom: 6px;">
+                    <input id="function" matInput placeholder="Function" [formControl]="f_control" required>
+                    <mat-error *ngIf="f_control.invalid">{{getErrorMessage("f")}}</mat-error>
+                </mat-form-field>
+
+                <!-- INCREMENTAL SEARCH -->
+                <div *ngIf="method=='Incremental Search'" class="form-container">
+                    <mat-form-field style="margin-bottom: 6px;">
+                        <input id="x0" matInput type="number" placeholder="X0" [formControl]="x0_control" required>
+                        <mat-error *ngIf="x0_control.invalid">{{getErrorMessage("x0")}}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field style="margin-bottom: 6px;">
+                        <input id="delta" matInput type="number" placeholder="Delta" [formControl]="delta_control" required>
+                        <mat-error *ngIf="delta_control.invalid">{{getErrorMessage("delta")}}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field style="margin-bottom: 6px;">
+                        <input id="nIter" matInput type="number" placeholder="Number of Iterations" [formControl]="nIter_control" required>
+                        <mat-error *ngIf="nIter_control.invalid">{{getErrorMessage("nIter")}}</mat-error>
+                    </mat-form-field>
+                </div>
+                <!-- INCREMENTAL SEARCH -->
+
+                <!-- BISECTION -->
+                <div *ngIf="method=='Bisection'" class="form-container">
+                    <mat-form-field style="margin-bottom: 6px;">
+                        <input id="xi" matInput type="number" placeholder="Xi" [formControl]="xi_control" required>
+                        <mat-error *ngIf="xi_control.invalid">{{getErrorMessage("xi")}}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field style="margin-bottom: 6px;">
+                        <input id="xu" matInput type="number" placeholder="Xu" [formControl]="xu_control" required>
+                        <mat-error *ngIf="xu_control.invalid">{{getErrorMessage("xu")}}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field style="margin-bottom: 6px;">
+                        <input id="nIter" matInput type="number" placeholder="Number of Iterations" [formControl]="nIter_control" required>
+                        <mat-error *ngIf="nIter_control.invalid">{{getErrorMessage("nIter")}}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field style="margin-bottom: 6px;">
+                        <input id="tol" matInput type="number" placeholder="Tolerance" [formControl]="tol_control" required>
+                        <mat-error *ngIf="tol_control.invalid">{{getErrorMessage("tol")}}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field style="margin-bottom: 6px;">
+                        <mat-label>Error Type</mat-label>
+                        <mat-select matNativeControl [formControl]="error_control" required [(value)]=error>
+                            <mat-option *ngFor="let error of errorTypes" [value]="error">
+                                {{error}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="error_control.invalid">{{getErrorMessage("error")}}</mat-error>
+                    </mat-form-field>
+                </div>
+                <!-- BISECTION -->
+
+                <!-- FALSE POSITION -->
+                <div *ngIf="method=='False Position'" class="form-container">
+                    <mat-form-field style="margin-bottom: 6px;">
+                        <input id="xi" matInput type="number" placeholder="Xi" [formControl]="xi_control" required>
+                        <mat-error *ngIf="xi_control.invalid">{{getErrorMessage("xi")}}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field style="margin-bottom: 6px;">
+                        <input id="xu" matInput type="number" placeholder="Xu" [formControl]="xu_control" required>
+                        <mat-error *ngIf="xu_control.invalid">{{getErrorMessage("xu")}}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field style="margin-bottom: 6px;">
+                        <input id="nIter" matInput type="number" placeholder="Number of Iterations" [formControl]="nIter_control" required>
+                        <mat-error *ngIf="nIter_control.invalid">{{getErrorMessage("nIter")}}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field style="margin-bottom: 6px;">
+                        <input id="tol" matInput type="number" placeholder="Tolerance" [formControl]="tol_control" required>
+                        <mat-error *ngIf="tol_control.invalid">{{getErrorMessage("tol")}}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field style="margin-bottom: 6px;">
+                        <mat-label>Error Type</mat-label>
+                        <mat-select matNativeControl [formControl]="error_control" required [(value)]=error>
+                            <mat-option *ngFor="let error of errorTypes" [value]="error">
+                                {{error}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="error_control.invalid">{{getErrorMessage("error")}}</mat-error>
+                    </mat-form-field>
+                </div>
+                <!-- FALSE POSITION -->
+
+                <!-- FIXED POINT-->
+                <div *ngIf="method=='Fixed Point'" class="form-container">
+                    <mat-form-field style="margin-bottom: 6px;">
+                        <input id="g" matInput placeholder="g Function" [formControl]="g_control" required>
+                        <mat-error *ngIf="g_control.invalid">{{getErrorMessage("g")}}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field style="margin-bottom: 6px;">
+                        <input id="xa" matInput type="number" placeholder="Xa" [formControl]="xa_control" required>
+                        <mat-error *ngIf="xa_control.invalid">{{getErrorMessage("xa")}}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field style="margin-bottom: 6px;">
+                        <input id="nIter" matInput type="number" placeholder="Number of Iterations" [formControl]="nIter_control" required>
+                        <mat-error *ngIf="nIter_control.invalid">{{getErrorMessage("nIter")}}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field style="margin-bottom: 6px;">
+                        <input id="tol" matInput type="number" placeholder="Tolerance" [formControl]="tol_control" required>
+                        <mat-error *ngIf="tol_control.invalid">{{getErrorMessage("tol")}}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field style="margin-bottom: 6px;">
+                        <mat-label>Error Type</mat-label>
+                        <mat-select matNativeControl [formControl]="error_control" required [(value)]=error>
+                            <mat-option *ngFor="let error of errorTypes" [value]="error">
+                                {{error}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="error_control.invalid">{{getErrorMessage("error")}}</mat-error>
+                    </mat-form-field>
+                </div>
+                <!-- FIXED POINT-->
+
+                <!-- NEWTON-->
+                <div *ngIf="method=='Newton'" class="form-container">
+                    <mat-form-field style="margin-bottom: 6px;">
+                        <input id="dFunction" matInput placeholder="Derivative Function" [formControl]="d_control" required>
+                        <mat-error *ngIf="d_control.invalid">{{getErrorMessage("d")}}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field style="margin-bottom: 6px;">
+                        <input id="x0" matInput type="number" placeholder="X0" [formControl]="x0_control" required>
+                        <mat-error *ngIf="x0_control.invalid">{{getErrorMessage("x0")}}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field style="margin-bottom: 6px;">
+                        <input id="nIter" matInput type="number" placeholder="Number of Iterations" [formControl]="nIter_control" required>
+                        <mat-error *ngIf="nIter_control.invalid">{{getErrorMessage("nIter")}}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field style="margin-bottom: 6px;">
+                        <input id="tol" matInput type="number" placeholder="Tolerance" [formControl]="tol_control" required>
+                        <mat-error *ngIf="tol_control.invalid">{{getErrorMessage("tol")}}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field style="margin-bottom: 6px;">
+                        <mat-label>Error Type</mat-label>
+                        <mat-select matNativeControl [formControl]="error_control" required [(value)]=error>
+                            <mat-option *ngFor="let error of errorTypes" [value]="error">
+                                {{error}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="error_control.invalid">{{getErrorMessage("error")}}</mat-error>
+                    </mat-form-field>
+                </div>
+                <!-- NEWTON-->
+
+                <!-- SECANT -->
+                <div *ngIf="method=='Secant'" class="form-container">
+                    <mat-form-field style="margin-bottom: 6px;">
+                        <input id="x0" type="number" matInput placeholder="X0" [formControl]="x0_control" required>
+                        <mat-error *ngIf="x0_control.invalid">{{getErrorMessage("x0")}}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field style="margin-bottom: 6px;">
+                        <input id="x1" matInput type="number" placeholder="X1" [formControl]="x1_control" required>
+                        <mat-error *ngIf="x1_control.invalid">{{getErrorMessage("x1")}}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field style="margin-bottom: 6px;">
+                        <input id="nIter" matInput type="number" placeholder="Number of Iterations" [formControl]="nIter_control" required>
+                        <mat-error *ngIf="nIter_control.invalid">{{getErrorMessage("nIter")}}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field style="margin-bottom: 6px;">
+                        <input id="tol" matInput type="number" placeholder="Tolerance" [formControl]="tol_control" required>
+                        <mat-error *ngIf="tol_control.invalid">{{getErrorMessage("tol")}}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field style="margin-bottom: 6px;">
+                        <mat-label>Error Type</mat-label>
+                        <mat-select matNativeControl [formControl]="error_control" required [(value)]=error>
+                            <mat-option *ngFor="let error of errorTypes" [value]="error">
+                                {{error}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="error_control.invalid">{{getErrorMessage("error")}}</mat-error>
+                    </mat-form-field>
+                </div>
+                <!-- SECANT -->
+
+                <!-- MULTIPLE ROOTS -->
+                <div *ngIf="method=='Multiple Roots'" class="form-container">
+                    <mat-form-field style="margin-bottom: 6px;">
+                        <input id="d" matInput placeholder="Derivative Function" [formControl]="d_control" required>
+                        <mat-error *ngIf="d_control.invalid">{{getErrorMessage("d")}}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field style="margin-bottom: 6px;">
+                        <input id="d2" matInput placeholder="Second Derivative Function" [formControl]="d2_control" required>
+                        <mat-error *ngIf="d2_control.invalid">{{getErrorMessage("d2")}}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field style="margin-bottom: 6px;">
+                        <input id="x0" type="number" matInput placeholder="X0" [formControl]="x0_control" required>
+                        <mat-error *ngIf="x0_control.invalid">{{getErrorMessage("x0")}}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field style="margin-bottom: 6px;">
+                        <input id="nIter" matInput type="number" placeholder="Number of Iterations" [formControl]="nIter_control" required>
+                        <mat-error *ngIf="nIter_control.invalid">{{getErrorMessage("nIter")}}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field style="margin-bottom: 6px;">
+                        <input id="tol" matInput type="number" placeholder="Tolerance" [formControl]="tol_control" required>
+                        <mat-error *ngIf="tol_control.invalid">{{getErrorMessage("tol")}}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field style="margin-bottom: 6px;">
+                        <mat-label>Error Type</mat-label>
+                        <mat-select matNativeControl [formControl]="error_control" required [(value)]=error>
+                            <mat-option *ngFor="let error of errorTypes" [value]="error">
+                                {{error}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="error_control.invalid">{{getErrorMessage("error")}}</mat-error>
+                    </mat-form-field>
+
+                </div>
+                <!-- MULTIPLE ROOTS -->
+                <br>
+                <button mat-raised-button color="primary" *ngIf="method!=''" (click)="plot();">Calculate</button>
+                <br>
+            </div>
+        </form>
+    </div>
+    <div id="scrolltable" style="width: 68%; float: right;">
+        <canvas id="myCanvas" width="1000px" height="600px"></canvas>
+        <br>
+        <p *ngIf="method=='Incremental Search' && firstNum!=secondNum && show">There is a root between {{firstNum}} and {{secondNum}}</p>
+        <p *ngIf="method=='Incremental Search' && firstNum==secondNum && show">The root is {{firstNum}}</p>
+        <p *ngIf="method=='Incremental Search' && errorFound">Error: Could not find anything!</p>
+
+        <p *ngIf="method=='Bisection' && show">The root is {{result}}</p>
+        <p *ngIf="method=='Bisection' && errorFound">Error: {{result}}</p>
+
+        <p *ngIf="method=='False Position' && show">The root is {{result}}</p>
+        <p *ngIf="method=='False Position' && errorFound">Error: {{result}}</p>
+
+        <p *ngIf="method=='Fixed Point' && showF"><mat-icon style="color: red;">linear_scale</mat-icon> F Function 
+           <mat-icon style="color: blue;">linear_scale</mat-icon> G Function 
+           <mat-icon style="color: green;">linear_scale</mat-icon> y = x
+        </p>
+
+        <br>
+        <p *ngIf="method=='Fixed Point' && show">The root is {{result}}</p>
+        <p *ngIf="method=='Fixed Point' && errorFound">Error: {{result}}</p>
+
+        <p *ngIf="method=='Newton' && show">The root is {{result}}</p>
+        <p *ngIf="method=='Newton' && errorFound">Error: {{result}}</p>
+
+        <p *ngIf="method=='Secant' && show">The root is {{result}}</p>
+        <p *ngIf="method=='Secant' && errorFound">Error: {{result}}</p>
+
+        <p *ngIf="method=='Multiple Roots' && show">The root is {{result}}</p>
+        <p *ngIf="method=='Multiple Roots' && errorFound">Error: {{result}}</p>
+
+    </div>
+</div>

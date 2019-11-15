@@ -38,6 +38,7 @@ import { GeneralSimpson13Component } from './general-simpson13/general-simpson13
 import { GeneralSimpson38Component } from './general-simpson38/general-simpson38.component';
 import { JacobiComponent } from './jacobi/jacobi.component';
 import { GaussSeidelComponent } from './gauss-seidel/gauss-seidel.component';
+import { SingleVariableComponent } from './single-variable/single-variable.component';
 
 
 @NgModule({
@@ -68,7 +69,8 @@ import { GaussSeidelComponent } from './gauss-seidel/gauss-seidel.component';
     GeneralSimpson13Component,
     GeneralSimpson38Component,
     JacobiComponent,
-    GaussSeidelComponent
+    GaussSeidelComponent,
+    SingleVariableComponent
   ],
   imports: [
     BrowserModule,
