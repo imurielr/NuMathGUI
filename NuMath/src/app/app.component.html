@@ -5,6 +5,11 @@
   
 <mat-sidenav-container class="sidenav-container" (keydown.control.b)="sidenav.toggle()" style="height: 90%;">
     <mat-sidenav #sidenav mode="side">
+        <mat-nav-list>
+          <a mat-list-item routerLink="/singleVariable">Single Variable Equations</a>
+          <a mat-lits-item routerLink="/equationSystems">Solution of Equation Systems</a>
+        </mat-nav-list>
+
       <mat-accordion>
         <mat-expansion-panel>
     <mat-expansion-panel-header class="expansionHeader">

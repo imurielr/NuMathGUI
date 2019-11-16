@@ -29,6 +29,7 @@ import { GeneralSimpson13Component } from './general-simpson13/general-simpson13
 import { GeneralSimpson38Component } from './general-simpson38/general-simpson38.component';
 
 import { SingleVariableComponent } from './single-variable/single-variable.component';
+import { EquationSystemComponent } from './equation-system/equation-system.component';
 
 const routes: Routes = [
   {
@@ -138,6 +139,10 @@ const routes: Routes = [
   {
     path: 'singleVariable',
     component: SingleVariableComponent
+  },
+  {
+    path: 'equationSystems',
+    component: EquationSystemComponent
   }
 ];
 

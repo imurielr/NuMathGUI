@@ -47,7 +47,7 @@ export class SingleVariableComponent implements OnInit {
     'Relative',
   ];
 
-  method = '';
+  method = ''; 
 
   f = '';
   x0 = '';
@@ -72,6 +72,9 @@ export class SingleVariableComponent implements OnInit {
   showF = false;
 
   plot() {
+    this.show = false;
+    this.errorFound = false;
+    
     if (this.method == 'Incremental Search') {
       this.show = false;
       this.errorFound = false;

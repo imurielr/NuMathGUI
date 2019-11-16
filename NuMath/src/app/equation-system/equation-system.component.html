@@ -1,0 +1,91 @@
+<h1 style="text-align: center;">Solution of Equation Systems</h1>
+<div style=" margin-left: 3%; margin-right: 3%;">
+    <div id="scrolltable" style="width: 28%; float: left;">
+        <form>
+            <div class="form-container">
+                <mat-form-field style="margin-bottom: 6px;">
+                    <mat-label>Method</mat-label>
+                    <mat-select matNativeControl [(value)]=method>
+                        <mat-option *ngFor="let method of methods" [value]="method">
+                            {{method}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field style="margin-bottom: 4px;">
+                    <input id="n" matInput placeholder="Number of Equations" type="number" [formControl]="n_control"
+                        required>
+                    <mat-error *ngIf="n_control.invalid">{{getErrorMessage()}}</mat-error>
+                </mat-form-field>
+                <button mat-raised-button color="primary" style="width: min-content;" (click)="showMatrix();">Enter
+                    Matrix</button>
+
+                <div *ngIf="showTable">
+                    <h4> Please enter A matrix with independent values </h4>
+                    <form>
+                        <table id="matrix">
+                            <tr *ngFor="let row of data; index as i" id="row{{i+1}}">
+                                <td *ngFor="let column of data; index as j"><input class="cell" id="cell{{i+1}}{{j+1}}"
+                                        type="number" required></td>
+                                <th>
+                                    <p> = </p>
+                                </th>
+                                <td><input class="cell" id="b{{i+1}}" type="number" required></td>
+                            </tr>
+                        </table>
+
+                        <div *ngIf="method=='Jacobi' || method=='Gauss-Seidel'">
+                            <h4> Please enter values</h4>
+                            <mat-form-field style="margin-bottom: 6px;">
+                                <input id="nIter" matInput type="number" placeholder="Number of Iterations"
+                                    [formControl]="nIter_control" required>
+                                <mat-error *ngIf="nIter_control.invalid">{{getErrorMessage("nIter")}}</mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field style="margin-bottom: 6px;">
+                                <input id="tol" matInput type="number" placeholder="Tolerance"
+                                    [formControl]="tol_control" required>
+                                <mat-error *ngIf="tol_control.invalid">{{getErrorMessage("tol")}}</mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field style="margin-bottom: 6px;">
+                                <input id="lambda" matInput type="number"
+                                    placeholder="Lambda (If you do not want to use it set it to 1"
+                                    [formControl]="lambda_control" required>
+                                <mat-error *ngIf="lambda_control.invalid">{{getErrorMessage("lambda")}}</mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field style="margin-bottom: 6px;">
+                                <mat-label>Error Type</mat-label>
+                                <mat-select matNativeControl [formControl]="error_control" required [(value)]=error>
+                                    <mat-option *ngFor="let error of errorTypes" [value]="error">
+                                        {{error}}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="error_control.invalid">{{getErrorMessage("error")}}</mat-error>
+                            </mat-form-field>
+                            <h4> Please enter initial values</h4>
+                            <form>
+                                <table id="initialValues">
+                                    <tr>
+                                        <td *ngFor="let row of data; index as i" id="row{{i+1}}"><input class="cell"
+                                                id="initial{{i+1}}" type="number" required></td>
+                                    </tr>
+                                </table>
+                            </form>
+                        </div>
+
+                        <button mat-raised-button *ngIf="method!='Jacobi' && method!='Gauss-Seidel'" color="primary"
+                            style="width: min-content; margin-top: 10px;" (click)="calculate();">Calculate</button>
+                        <button mat-raised-button *ngIf="method=='Jacobi' || method=='Gauss-Seidel'" color="primary"
+                            style="width: min-content; margin-top: 10px;" (click)="calculate2();">Calculate</button>
+                    </form>
+
+
+
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>

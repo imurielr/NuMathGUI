@@ -39,6 +39,7 @@ import { GeneralSimpson38Component } from './general-simpson38/general-simpson38
 import { JacobiComponent } from './jacobi/jacobi.component';
 import { GaussSeidelComponent } from './gauss-seidel/gauss-seidel.component';
 import { SingleVariableComponent } from './single-variable/single-variable.component';
+import { EquationSystemComponent } from './equation-system/equation-system.component';
 
 
 @NgModule({
@@ -70,7 +71,8 @@ import { SingleVariableComponent } from './single-variable/single-variable.compo
     GeneralSimpson38Component,
     JacobiComponent,
     GaussSeidelComponent,
-    SingleVariableComponent
+    SingleVariableComponent,
+    EquationSystemComponent
   ],
   imports: [
     BrowserModule,
