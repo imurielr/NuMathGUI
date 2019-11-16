@@ -35,6 +35,8 @@ export class InterpolationComponent implements OnInit {
   num;
 
   result;
+  function;
+  limits;
   show = false;
 
   method;
@@ -76,6 +78,7 @@ export class InterpolationComponent implements OnInit {
         this.postNewton(Number(this.numEq), this.returningDataPoints);
         break;
       case "Linear Spline":
+        this.postLinearSpline(Number(this.numEq), this.returningDataPoints);
         break;
       case "Quadratic Spline":
         break;
@@ -129,6 +132,26 @@ export class InterpolationComponent implements OnInit {
       .subscribe(
         res => {
           this.result = res['pol'];
+          this.show = true;
+        }
+      )
+  }
+
+  postLinearSpline(numPoints: Number, points) {
+  
+    const req = this.http.post(`/methods/linearSpline`, JSON.stringify({
+      numPoints: numPoints,
+      points: points
+    }),
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      })
+      .subscribe(
+        res => {
+          this.function = res['functions'];
+          this.limits = res['limits'];
           this.show = true;
         }
       )
