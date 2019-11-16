@@ -46,7 +46,7 @@
     
         <div *ngIf="method=='Linear Spline' && show">
             <p *ngFor="let point of data; index as i">
-                {{function[i]}},  {{limits[i]}}
+                {{function[i]}},  {{limits[i]}} < x < {{limits[i++]}}
             </p>
         </div>
 
