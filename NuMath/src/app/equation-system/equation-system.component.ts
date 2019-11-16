@@ -98,13 +98,13 @@ export class EquationSystemComponent implements OnInit {
     }
     switch (this.method) {
       case "Simple Gaussian Elimination":
-        // this.postSGE(Number(this.numEq), this.returningDataMatrix, this.returningDataB);
+        this.postSGE(Number(this.numEq), this.returningDataMatrix, this.returningDataB);
         break;
       case "Gaussian Elimination with Partial Pivot":
-        // this.postGEP(Number(this.numEq), this.returningData);
+        this.postGEP(Number(this.numEq), this.returningDataMatrix, this.returningDataB);
         break;
       case "Gaussian Elimination witn Total Pivot":
-        // this.postGET(Number(this.numEq), this.returningData);
+        this.postGET(Number(this.numEq), this.returningDataMatrix, this.returningDataB);
         break;
       case "Doolittle Factorization":
         this.postDoolittle(Number(this.numEq), this.returningDataMatrix, this.returningDataB);
@@ -172,11 +172,12 @@ export class EquationSystemComponent implements OnInit {
     });
   }
 
-  postSGE(numEq: Number, data) {  //TODO CHANGE SERVER
+  postSGE(numEq: Number, dataA, dataB) {  //TODO CHANGE SERVER
 
     const req = this.http.post(`/methods/SGE`, JSON.stringify({
       numEq: numEq,
-      nums: data
+      numsA: dataA,
+      numsB: dataB
     }),
     {
       headers:{
@@ -197,11 +198,12 @@ export class EquationSystemComponent implements OnInit {
     )
   }
 
-  postGEP(numEq: Number, data) {
+  postGEP(numEq: Number, dataA, dataB) {
 
     const req = this.http.post(`/methods/GEP`, JSON.stringify({
       numEq: numEq,
-      nums: data
+      numsA: dataA,
+      numsB: dataB
     }),
     {
       headers:{
@@ -222,11 +224,12 @@ export class EquationSystemComponent implements OnInit {
     )
   }
 
-  postGET(numEq: Number, data) {
+  postGET(numEq: Number, dataA, dataB) {
 
     const req = this.http.post(`/methods/GET`, JSON.stringify({
       numEq: numEq,
-      nums: data
+      numsA: dataA,
+      numsB: dataB
     }),
     {
       headers:{
