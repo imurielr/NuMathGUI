@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
 import {MatSnackBar} from '@angular/material/snack-bar';
 
+import { HttpClient } from '@angular/common/http';
+
 @Component({
   selector: 'app-dif5-points',
   templateUrl: './dif5-points.component.html',
@@ -9,7 +11,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 })
 export class Dif5PointsComponent implements OnInit {
 
-  constructor(private _snackBar: MatSnackBar) { }
+  constructor(private http: HttpClient, private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
   }
@@ -29,6 +31,9 @@ export class Dif5PointsComponent implements OnInit {
   h = '';
   returningDataPoints;
 
+  result;
+  show;
+
   calculate() {
 
     if(this.h_control.invalid || this.direction_control.invalid){
@@ -42,9 +47,10 @@ export class Dif5PointsComponent implements OnInit {
       for (let i = 1; i <= 5; i++){
         for (let j = 0; j < 2; j++){
           let cell = ((document.getElementById('cell' + i + '' + j)) as HTMLInputElement).value
-          this.returningDataPoints.push(cell);
+          this.returningDataPoints.push(Number(cell));
         }
-      }      
+      }   
+      this.post(5, this.returningDataPoints, this.direction, Number(this.h));    
     }
   }
 
@@ -63,6 +69,27 @@ export class Dif5PointsComponent implements OnInit {
     this._snackBar.open(message, action, {
       duration: 2000,
     });
+  }
+
+  post(numPoints: Number, points, direction: string, h: Number) {
+
+    const req = this.http.post(`/methods/diferentiation`, JSON.stringify({
+      numPoints: numPoints,
+      points: points,
+      direction: direction,
+      h: h
+    }),
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      })
+      .subscribe(
+        res => {
+          this.result = res['value'];
+          this.show = true;
+        }
+      )
   }
 
 }

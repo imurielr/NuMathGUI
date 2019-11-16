@@ -13,12 +13,13 @@
                     </mat-select>
                 </mat-form-field>
 
-                    <mat-form-field style="margin-bottom: 4px;">
-                        <input id="n" matInput placeholder="Number of Points" type="number" [formControl]="n_control"
-                            required>
-                        <mat-error *ngIf="n_control.invalid">{{getErrorMessage()}}</mat-error>
-                    </mat-form-field>
-                    <button mat-raised-button color="primary" style="width: min-content;" (click)="showMatrix();">Enter Matrix</button>
+                <mat-form-field style="margin-bottom: 4px;">
+                    <input id="n" matInput placeholder="Number of Points" type="number" [formControl]="n_control"
+                        required>
+                    <mat-error *ngIf="n_control.invalid">{{getErrorMessage()}}</mat-error>
+                </mat-form-field>
+                <button mat-raised-button color="primary" style="width: min-content;" (click)="showMatrix();">Enter
+                    Matrix</button>
                 <br>
                 <div *ngIf="showTable">
                     <h4> Please enter points (x , y)</h4>
@@ -38,25 +39,37 @@
         </form>
     </div>
 
-    <div style="width: 48%; float: right;">
+    <div style="width: 68%; float: right;">
 
         <p *ngIf="method=='Lagrange' && show">Lagrange's Polynomial: {{result}}</p>
 
         <p *ngIf="method=='Newton' && show">Newton's Polynomial: {{result}}</p>
-    
+
         <div *ngIf="method=='Linear Spline' && show">
             <p *ngFor="let point of function; index as i">
-                {{point}},  {{limits[i]}}
+                {{point}}, {{limits[i]}}
             </p>
         </div>
 
         <div *ngIf="method=='Quadratic Spline' && show">
+            <h3>Matrix</h3>
             <table>
                 <tr *ngFor="let row of dataResult; index as i">
-                    <td *ngFor="let col of dataResult">{{matrix[i][j]}}</td>
+                    <td *ngFor="let col of dataResult; index as j" class="cell">{{matrix[i][j]}}</td>
+                    <td class="cell">{{indep[i]}}</td>
                 </tr>
             </table>
         </div>
+
+        <div *ngIf="method=='Cubic Spline' && show">
+                <h3>Matrix</h3>
+                <table>
+                    <tr *ngFor="let row of dataResultCubic; index as i">
+                        <td *ngFor="let col of dataResultCubic; index as j" class="cell">{{matrix[i][j]}}</td>
+                        <td class="cell">{{indep[i]}}</td>
+                    </tr>
+                </table>
+            </div>
 
 
 

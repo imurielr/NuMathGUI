@@ -13,33 +13,42 @@
                     <table id="matrix">
                         <tr *ngFor="let row of nPoints; index as i" id="row{{i+1}}">
                             <p> Point {{i+1}} </p>
-                            <td *ngFor="let number of [0,1]"><input class="cell" id="cell{{i+1}}{{number}}" type="number" required></td>
+                            <td *ngFor="let number of [0,1]"><input class="cell" id="cell{{i+1}}{{number}}"
+                                    type="number" required></td>
                         </tr>
                     </table>
-                    <mat-form-field style="margin-bottom: 6px;">
-                        <mat-label>Direction</mat-label>
-                        <mat-select matNativeControl [formControl]="direction_control" required [(value)]=direction>
-                            <mat-option *ngFor="let direction of directionTypes" [value]="direction">
-                                {{direction}}
-                            </mat-option>
-                        </mat-select>
-                        <mat-error *ngIf="direction_control.invalid">{{getErrorMessage("dir")}}</mat-error>
-                    </mat-form-field>
+                    <div class="form-container">
+                        <mat-form-field style="margin-bottom: 6px;">
+                            <mat-label>Direction</mat-label>
+                            <mat-select matNativeControl [formControl]="direction_control" required [(value)]=direction>
+                                <mat-option *ngFor="let direction of directionTypes" [value]="direction">
+                                    {{direction}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="direction_control.invalid">{{getErrorMessage("dir")}}</mat-error>
+                        </mat-form-field>
 
-                    <mat-form-field  style="margin-bottom: 6px;">
-                        <input id="h" matInput type="number" placeholder="h" [formControl]="h_control" required>
-                        <mat-error *ngIf="h_control.invalid">{{getErrorMessage("h")}}</mat-error>
-                    </mat-form-field>
+                        <mat-form-field style="margin-bottom: 6px;">
+                            <input id="h" matInput type="number" placeholder="h" [formControl]="h_control" required>
+                            <mat-error *ngIf="h_control.invalid">{{getErrorMessage("h")}}</mat-error>
+                        </mat-form-field>
 
-                    
-                    <button mat-raised-button color="primary" style="width: min-content; margin-top: 10px;" (click)="calculate();">Calculate</button>
+                        <button mat-raised-button color="primary" style="width: min-content; margin-top: 10px;"
+                            (click)="calculate();">Calculate</button>
+                    </div>
                 </form>
             </div>
         </form>
     </div>
 
     <div style="width: 48%; float: right;">
-        <h1>Holaaaa</h1>
+        <div style="width: 48%; float: right;">
+            <div *ngIf="show">
+                <h4>Results: </h4>
+                <p>{{result}}</p>
+            </div>
+
+        </div>
     </div>
-    
+
 </div>

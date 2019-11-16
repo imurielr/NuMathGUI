@@ -34,6 +34,9 @@ export class IntegrationComponent implements OnInit {
   showTable = false;
   num;
 
+  result;
+  show;
+
   showMatrix() {
     if (this.n_control.invalid) {
       if (this.n_control.hasError('min')) {
@@ -58,16 +61,19 @@ export class IntegrationComponent implements OnInit {
     for (let i = 1; i < Number(this.numEq) + 1; i++) {
       for (let j = 0; j < 2; j++) {
         let cell = (document.getElementById('cell' + i + '' + j) as HTMLInputElement).value
-        this.returningDataPoints.push(cell)
+        this.returningDataPoints.push(Number(cell))
       }
     }
 
     switch (this.method) {
       case "General Trapezium":
+        this.postTrapezium(this.numEq, this.returningDataPoints);
         break;
       case "General Simpson 1/3":
+        this.postSimpsonOne(this.numEq, this.returningDataPoints);
         break;
       case "General Simpson 3/8":
+        this.postSimpsonThree(this.numEq, this.returningDataPoints);
         break;
     }
 
@@ -83,6 +89,63 @@ export class IntegrationComponent implements OnInit {
     this._snackBar.open(message, action, {
       duration: 2000,
     });
+  }
+
+  postTrapezium(numPoints: Number, points) {
+
+    const req = this.http.post(`/methods/trapezium`, JSON.stringify({
+      numPoints: numPoints,
+      points: points,
+    }),
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      })
+      .subscribe(
+        res => {
+          this.result = res['value'];
+          this.show = true;
+        }
+      )
+  }
+
+  postSimpsonOne(numPoints: Number, points) {
+
+    const req = this.http.post(`/methods/simpsonOne`, JSON.stringify({
+      numPoints: numPoints,
+      points: points,
+    }),
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      })
+      .subscribe(
+        res => {
+          this.result = res['value'];
+          this.show = true;
+        }
+      )
+  }
+
+  postSimpsonThree(numPoints: Number, points) {
+
+    const req = this.http.post(`/methods/simpsonThree`, JSON.stringify({
+      numPoints: numPoints,
+      points: points,
+    }),
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      })
+      .subscribe(
+        res => {
+          this.result = res['value'];
+          this.show = true;
+        }
+      )
   }
 
 
