@@ -1,0 +1,37 @@
+<h1 style="text-align: center;">Numerical Integration</h1>
+<div style=" margin-left: 3%; margin-right: 3%;">
+    <div id="scrolltable" style="width: 28%; float: left;">
+        <form>
+            <div class="form-container">
+                <mat-form-field style="margin-bottom: 6px;">
+                    <mat-label>Method</mat-label>
+                    <mat-select matNativeControl [(value)]=method>
+                        <mat-option *ngFor="let method of methods" [value]="method">
+                            {{method}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                        <mat-form-field style="margin-bottom: 4px;">
+                            <input id="n" matInput placeholder="Number of Points" type="number" [formControl]="n_control" required>
+                            <mat-error *ngIf="n_control.invalid">{{getErrorMessage()}}</mat-error>
+                        </mat-form-field>
+                        <button mat-raised-button color="primary" style="width: min-content;" (click)="showMatrix();">Enter Matrix</button>
+                    <br>
+                    <div *ngIf="showTable">
+                        <h4> Please enter points (x , y)</h4>
+                        <form>
+                            <table id="matrix">
+                                <tr *ngFor="let row of data; index as i" id="row{{i+1}}">
+                                    <p> Point {{i+1}} </p>
+                                    <td *ngFor="let number of [0,1]"><input class="cell" id="cell{{i+1}}{{number}}" type="number" required></td>
+                                </tr>
+                            </table>
+                            <button mat-raised-button color="primary" style="width: min-content; margin-top: 10px;" (click)="calculate();">Calculate</button>
+                        </form>
+                    </div>
+
+            </div>
+        </form>
+    </div>
+</div>

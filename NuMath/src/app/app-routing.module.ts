@@ -30,6 +30,8 @@ import { GeneralSimpson38Component } from './general-simpson38/general-simpson38
 
 import { SingleVariableComponent } from './single-variable/single-variable.component';
 import { EquationSystemComponent } from './equation-system/equation-system.component';
+import { InterpolationComponent } from './interpolation/interpolation.component';
+import { IntegrationComponent } from './integration/integration.component';
 
 const routes: Routes = [
   {
@@ -143,6 +145,14 @@ const routes: Routes = [
   {
     path: 'equationSystems',
     component: EquationSystemComponent
+  },
+  {
+    path: 'interpolation',
+    component: InterpolationComponent
+  },
+  {
+    path: 'integration',
+    component: IntegrationComponent
   }
 ];
 

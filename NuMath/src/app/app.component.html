@@ -7,53 +7,12 @@
     <mat-sidenav #sidenav mode="side">
         <mat-nav-list>
           <a mat-list-item routerLink="/singleVariable">Single Variable Equations</a>
-          <a mat-lits-item routerLink="/equationSystems">Solution of Equation Systems</a>
+          <a mat-list-item routerLink="/equationSystems">Solution of Equation Systems</a>
+          <a mat-list-item routerLink="/interpolation">Interpolation</a>
+          <a mat-list-item routerLink="/integration">Numerical Integration</a>
         </mat-nav-list>
 
       <mat-accordion>
-        <mat-expansion-panel>
-    <mat-expansion-panel-header class="expansionHeader">
-            <mat-panel-title>Single Variable Equations</mat-panel-title>
-          </mat-expansion-panel-header>
-          <mat-nav-list>
-            <a mat-list-item routerLink="/incrSearch">Incremental Search</a>
-            <a mat-list-item routerLink="/bisection">Bisection</a> 
-            <a mat-list-item routerLink="/falsePosition">False Position</a>
-            <a mat-list-item routerLink="/fixedPoint">Fixed Point</a>
-            <a mat-list-item routerLink="/newtonVarEq">Newton</a>  
-            <a mat-list-item routerLink="/secant">Secant</a>  
-            <a mat-list-item routerLink="/multipleRoots">Multiple Roots</a>  
-          </mat-nav-list>
-        </mat-expansion-panel>
-
-        <mat-expansion-panel>
-          <mat-expansion-panel-header class="expansionHeader">
-            <mat-panel-title>Solution of Equation Systems</mat-panel-title>
-          </mat-expansion-panel-header>
-          <mat-nav-list>
-            <a mat-list-item routerLink="/simpleGaussianElim">Simple Gaussian Elimination</a>
-            <a mat-list-item routerLink="/partialPivot">Gaussian Elimination with Partial Pivot</a> 
-            <a mat-list-item routerLink="/totalPivot">Gaussian Elimination with Total Pivot</a>
-            <a mat-list-item routerLink="/doolitle">Doolittle Factorization</a>
-            <a mat-list-item routerLink="/crout">Crout Factorization</a>  
-            <a mat-list-item routerLink="/cholesky">Cholesky Factorization</a>
-            <a mat-list-item routerLink="/gauss-seidel">Gauss-Seidel</a>   
-            <a mat-list-item routerLink="/jacobi">Jacobi</a>  
-            </mat-nav-list>
-          </mat-expansion-panel>
-
-          <mat-expansion-panel>
-            <mat-expansion-panel-header class="expansionHeader">
-              <mat-panel-title>Interpolation</mat-panel-title>
-            </mat-expansion-panel-header>
-            <mat-nav-list>
-              <a mat-list-item routerLink="/lagrange">Lagrange</a>
-              <a mat-list-item routerLink="/newtonInterpolation">Newton</a> 
-              <a mat-list-item routerLink="/linearSpline">Linear Spline</a>
-              <a mat-list-item routerLink="/quadraticSpline">Quadratic Spline</a>
-              <a mat-list-item routerLink="/cubicSpline">Cubic Spline</a>
-            </mat-nav-list>
-          </mat-expansion-panel>
 
           <mat-expansion-panel>
             <mat-expansion-panel-header class="expansionHeader">
@@ -66,17 +25,8 @@
             </mat-nav-list>
           </mat-expansion-panel>
 
-          <mat-expansion-panel>
-            <mat-expansion-panel-header class="expansionHeader">
-              <mat-panel-title>Numerical Integration</mat-panel-title>
-            </mat-expansion-panel-header>
-            <mat-nav-list>
-              <a mat-list-item routerLink="/generalTrapezium">General Trapezium</a> 
-              <a mat-list-item routerLink="/generalSimpson_1_3">General Simpson 1/3</a>
-              <a mat-list-item routerLink="/generalSimpson_3_8">General Simpson 3/8</a>  
-            </mat-nav-list>
-          </mat-expansion-panel>
       </mat-accordion>
+
     </mat-sidenav>
   
     <mat-sidenav-content>

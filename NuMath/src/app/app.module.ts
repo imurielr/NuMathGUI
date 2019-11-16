@@ -40,6 +40,8 @@ import { JacobiComponent } from './jacobi/jacobi.component';
 import { GaussSeidelComponent } from './gauss-seidel/gauss-seidel.component';
 import { SingleVariableComponent } from './single-variable/single-variable.component';
 import { EquationSystemComponent } from './equation-system/equation-system.component';
+import { InterpolationComponent } from './interpolation/interpolation.component';
+import { IntegrationComponent } from './integration/integration.component';
 
 
 @NgModule({
@@ -72,7 +74,9 @@ import { EquationSystemComponent } from './equation-system/equation-system.compo
     JacobiComponent,
     GaussSeidelComponent,
     SingleVariableComponent,
-    EquationSystemComponent
+    EquationSystemComponent,
+    InterpolationComponent,
+    IntegrationComponent
   ],
   imports: [
     BrowserModule,

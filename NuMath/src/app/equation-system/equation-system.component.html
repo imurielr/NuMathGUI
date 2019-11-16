@@ -34,7 +34,7 @@
                             </tr>
                         </table>
 
-                        <div *ngIf="method=='Jacobi' || method=='Gauss-Seidel'">
+                        <div *ngIf="method=='Jacobi' || method=='Gauss-Seidel'" class="form-container">
                             <h4> Please enter values</h4>
                             <mat-form-field style="margin-bottom: 6px;">
                                 <input id="nIter" matInput type="number" placeholder="Number of Iterations"
@@ -93,7 +93,7 @@
         </div>
 
         <p *ngIf="errorFound">Error: {{result}}</p>
-        
+
     </div>
 
 </div>
