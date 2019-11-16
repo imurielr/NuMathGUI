@@ -73,6 +73,7 @@ export class InterpolationComponent implements OnInit {
         this.postLagrange(Number(this.numEq), this.returningDataPoints);
         break;
       case "Newton":
+        this.postNewton(Number(this.numEq), this.returningDataPoints);
         break;
       case "Linear Spline":
         break;
@@ -98,6 +99,25 @@ export class InterpolationComponent implements OnInit {
   postLagrange(numPoints: Number, points) {
 
     const req = this.http.post(`/methods/lagrange`, JSON.stringify({
+      numPoints: numPoints,
+      points: points,
+    }),
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      })
+      .subscribe(
+        res => {
+          this.result = res['pol'];
+          this.show = true;
+        }
+      )
+  }
+
+  postNewton(numPoints: Number, points) {
+
+    const req = this.http.post(`/methods/newtonInterp`, JSON.stringify({
       numPoints: numPoints,
       points: points,
     }),
