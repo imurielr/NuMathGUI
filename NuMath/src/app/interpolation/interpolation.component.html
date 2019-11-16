@@ -50,5 +50,15 @@
             </p>
         </div>
 
+        <div *ngIf="method=='Quadratic Spline' && show">
+            <table>
+                <tr *ngFor="let row of dataResult; index as i">
+                    <td *ngFor="let col of dataResult">{{matrix[i][j]}}</td>
+                </tr>
+            </table>
+        </div>
+
+
+
     </div>
 </div>

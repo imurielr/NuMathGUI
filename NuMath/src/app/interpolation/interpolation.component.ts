@@ -30,12 +30,16 @@ export class InterpolationComponent implements OnInit {
 
   numEq = 0;
   data;
+  dataResult;
   returningDataPoints;
   showTable = false;
   num;
 
   result;
   function;
+  matrix;
+  indep;
+
   limits=[];
   show = false;
 
@@ -55,6 +59,7 @@ export class InterpolationComponent implements OnInit {
     else {
       this.numEq = Number((document.getElementById('n') as HTMLInputElement).value);
       this.data = Array(Number(this.numEq));
+      this.dataResult = Array((Number(this.numEq)-1)*3);
       this.returningDataPoints = new Array();
       this.showTable = true;
     }
@@ -81,6 +86,7 @@ export class InterpolationComponent implements OnInit {
         this.postLinearSpline(Number(this.numEq), this.returningDataPoints);
         break;
       case "Quadratic Spline":
+        this.postQuadraticSpline(Number(this.numEq), this.returningDataPoints);
         break;
       case "Cubic Spline":
         break;
@@ -156,6 +162,28 @@ export class InterpolationComponent implements OnInit {
           for (let i = 0; i < lim.length; i+=2) {
             this.limits.push(lim[i] + ' <= x <= ' + lim[i+1]);
           }
+          this.show = true;
+        }
+      )
+  }
+
+  postQuadraticSpline(numPoints: Number, points) {
+  
+    const req = this.http.post(`/methods/quadraticSpline`, JSON.stringify({
+      numPoints: numPoints,
+      points: points
+    }),
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      })
+      .subscribe(
+        res => {
+          this.matrix = res['matrix'];
+          this.indep = res['indep'];
+
+          
           this.show = true;
         }
       )
