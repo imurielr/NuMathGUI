@@ -36,7 +36,7 @@ export class InterpolationComponent implements OnInit {
 
   result;
   function;
-  limits;
+  limits=[];
   show = false;
 
   method;
@@ -151,7 +151,11 @@ export class InterpolationComponent implements OnInit {
       .subscribe(
         res => {
           this.function = res['functions'];
-          this.limits = res['limits'];
+          let lim = res['limits'];
+
+          for (let i = 0; i < lim.length; i+=2) {
+            this.limits.push(lim[i] + ' <= x <= ' + lim[i+1]);
+          }
           this.show = true;
         }
       )
