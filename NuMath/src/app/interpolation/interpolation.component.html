@@ -45,8 +45,8 @@
         <p *ngIf="method=='Newton' && show">Newton's Polynomial: {{result}}</p>
     
         <div *ngIf="method=='Linear Spline' && show">
-            <p *ngFor="let point of function; let limit of limits">
-                {{point}},  {{limit}}
+            <p *ngFor="let point of data; index as i">
+                {{function[i]}},  {{limits[i]}}
             </p>
         </div>
 
