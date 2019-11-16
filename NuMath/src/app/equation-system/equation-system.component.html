@@ -80,12 +80,20 @@
                         <button mat-raised-button *ngIf="method=='Jacobi' || method=='Gauss-Seidel'" color="primary"
                             style="width: min-content; margin-top: 10px;" (click)="calculate2();">Calculate</button>
                     </form>
-
-
-
                 </div>
-
             </div>
         </form>
     </div>
+
+    <div id="scrolltable" style="width: 68%; float: right;">
+
+        <div *ngIf="show">
+            <h4>Results: </h4>
+            <p *ngFor="let res of result; index as i">X{{i}} = {{res}}</p>
+        </div>
+
+        <p *ngIf="errorFound">Error: {{result}}</p>
+        
+    </div>
+
 </div>
