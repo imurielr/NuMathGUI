@@ -69,6 +69,7 @@ export class SingleVariableComponent implements OnInit {
 
   firstNum = '';
   secondNum = '';
+  table;
   showF = false;
 
   plot() {
@@ -703,6 +704,7 @@ export class SingleVariableComponent implements OnInit {
           else {
             this.firstNum = res['first'];
             this.secondNum = res['last'];
+            this.table = res['table'];
             this.show = true;
           }
         }
@@ -728,6 +730,7 @@ export class SingleVariableComponent implements OnInit {
         res => {
           if (res['error'] == undefined) {
             this.result = res['root'];
+            this.table = res['table'];
             this.show = true;
           }
           else {
@@ -758,6 +761,7 @@ export class SingleVariableComponent implements OnInit {
         res => {
           if (res['error'] == undefined) {
             this.result = res['root'];
+            this.table = res['table'];
             this.show = true;
           }
           else {
@@ -788,6 +792,7 @@ export class SingleVariableComponent implements OnInit {
         res => {
           if (res['error'] == undefined) {
             this.result = res['root'];
+            this.table = res['table'];
             this.show = true;
           }
           else {
@@ -818,6 +823,7 @@ export class SingleVariableComponent implements OnInit {
         res => {
           if (res['error'] == undefined) {
             this.result = res['root'];
+            this.table = res['table'];
             this.show = true;
           }
           else {
@@ -847,6 +853,7 @@ export class SingleVariableComponent implements OnInit {
         res => {
           if (res['error'] == undefined) {
             this.result = res['root'];
+            this.table = res['table'];
             this.show = true;
           }
           else {
@@ -878,6 +885,7 @@ export class SingleVariableComponent implements OnInit {
       res => {
         if (res['error'] == undefined) {
           this.result = res['root'];
+          this.table = res['table'];
           this.show = true;
         }
         else {

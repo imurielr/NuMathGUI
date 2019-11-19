@@ -87,12 +87,48 @@
 
     <div id="scrolltable" style="width: 68%; float: right;">
 
+
+        <div *ngIf="method!=''">
+            <p id=helper *ngIf="method=='Jacobi'"> Method used to solve single variable equations. It uses initial
+                values to
+                calculate new values.
+                Each diagonal element is solved for, an approximate value is plugged in. The process iterates until it
+                converges.
+                If the matrix used is strictly diagonally dominant the method always converges.
+            </p>
+
+            <p id=helper *ngIf="method=='Gauss-Seidel'"> The Gauss-Seidel method is an iterative way to solve a given
+                system of equations. It is a modification of
+                Jacobi’s method,
+                because in each iteration it uses the updated values to find the next one, instead of using all the
+                default last
+                values like Jacobi does.
+                It’s convergence is only guaranteed if only if the matrix is either diagonally dominant, or symmetric
+                and positive
+                definite.
+            </p>
+        </div>
+
         <div *ngIf="show">
             <h4>Results: </h4>
             <p *ngFor="let res of result; index as i">X{{i}} = {{res}}</p>
         </div>
 
         <p *ngIf="errorFound">Error: {{result}}</p>
+
+        <div *ngIf="(method=='Jacobi' || method=='Gauss-Seidel') && show">
+            <table class="table">
+                <tr>
+                    <td>n</td>
+                    <td *ngFor="let val of returningDataInitial; index as i">x{{i}}</td>
+                    <td>Error</td>
+                </tr>
+                <tr *ngFor="let row of table">
+                    <td *ngFor="let val of row">{{val}}</td>
+                </tr>
+            </table>
+        </div>
+
 
     </div>
 

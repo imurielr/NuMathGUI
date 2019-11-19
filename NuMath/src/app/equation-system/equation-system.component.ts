@@ -51,6 +51,7 @@ export class EquationSystemComponent implements OnInit {
   returningDataMatrix;
   returningDataB;
   returningDataInitial;
+  table;
 
   nIter = '';
   tolerance = '';
@@ -84,6 +85,7 @@ export class EquationSystemComponent implements OnInit {
   }
 
   calculate() {
+    this.errorFound = false;
     //We clear the Array
     this.returningDataMatrix = [];
     this.returningDataB = [];
@@ -119,9 +121,13 @@ export class EquationSystemComponent implements OnInit {
   }
 
   calculate2() {
+    this.errorFound = false;
     if (this.nIter_control.invalid || this.tol_control.invalid || this.lambda_control.invalid || this.error_control.invalid) {
       if (this.nIter_control.hasError('min')) {
         this.openSnackBar("Please enter a valid value for the number of iterations", "Ok");
+      }
+      else if (this.lambda_control.hasError('min') || this.lambda.hasError('max')) {
+        this.openSnackBar("Please enter a valid number for lambda", "Ok");
       }
       else {
         this.openSnackBar("Please enter all the values", "Ok");
@@ -349,6 +355,7 @@ export class EquationSystemComponent implements OnInit {
       res => {
         if (res['error'] == undefined) {
           this.result = res['results'];
+          this.table = res['table'];
           this.show = true;
         }
         else {
@@ -380,6 +387,7 @@ export class EquationSystemComponent implements OnInit {
       res => {
         if (res['error'] == undefined) {
           this.result = res['results'];
+          this.table = res['table'];
           this.show = true;
         }
         else {
