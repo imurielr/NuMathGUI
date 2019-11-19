@@ -6,17 +6,18 @@
 
                 <mat-form-field style="margin-bottom: 6px;">
                     <mat-label>Method</mat-label>
-                    <mat-select matNativeControl [(value)]=method>
+                    <mat-select matNativeControl [formControl]="method_control" [(value)]=method>
                         <mat-option *ngFor="let method of methods" [value]="method">
                             {{method}}
                         </mat-option>
                     </mat-select>
+                    <mat-error *ngIf="method_control.invalid">{{getErrorMessage("method")}}</mat-error>
                 </mat-form-field>
 
                 <mat-form-field style="margin-bottom: 4px;">
                     <input id="n" matInput placeholder="Number of Points" type="number" [formControl]="n_control"
                         required>
-                    <mat-error *ngIf="n_control.invalid">{{getErrorMessage()}}</mat-error>
+                    <mat-error *ngIf="n_control.invalid">{{getErrorMessage("n")}}</mat-error>
                 </mat-form-field>
                 <button mat-raised-button color="primary" style="width: min-content;" (click)="showMatrix();">Enter
                     Matrix</button>
@@ -41,6 +42,45 @@
 
     <div style="width: 68%; float: right;">
 
+        <div *ngIf="method!=''">
+            <p id=helper *ngIf="method=='Lagrange'"> The Lagrange interpolation is a way to find a polynomial which
+                takes on certain values at arbitrary points. Then
+                Li are calculated as the producer of the points. When j = i Lo is equal to 1 then j != i means 0, Lo
+                values are
+                multiplicated with every point evaluated f(xi).
+            </p>
+
+            <p id=helper *ngIf="method=='Newton'">
+                Given a number of points this method calculates a polynomical function that passes through every point
+                involved. This function is created by bo elements which are calculated by divided diferences then this
+                values is multiplicated by the independent value minus each x of the points.
+            </p>
+
+            <p id=helper *ngIf="method=='Linear Spline'">
+                Linear Splines are polynomial functions of grade 1. Their structure is (f (x) = ax + b) which unite all
+                the points involved. So, when we are interpolating points with linear splines, what we are doing is
+                joining the points with linear functions or line segments.
+            </p>
+
+            <p id=helper *ngIf="method=='Quadratic Spline'">
+                The quadratic spline is a polynomical function which passes through every point given. It is build from
+                2nd grade functions which structure is ax ^ 2 + bx + c. The function generated has 6 unknown values,
+                which are discovered by the fact that the points are connected with each other (lines), the derivate
+                between them is equal and a final condition (derivate is equal to 0 in one of the ends of the function).
+                All of this secure the fact that the function is continuous and soft bewteen every point involved.
+            </p>
+
+            <p id=helper *ngIf="method=='Cubic Spline'">
+                The cubic spline is a polynomical function which passes through every point given. It is build from 3rd
+                grade functions which structure is ax ^ 3 + bx^2 + cx + d. The function generated has 4 unknown values
+                of each interval, which are discovered by the fact that the points are connected with each other
+                (lines), the derivate between them is equal, the second derivate between them is equal and a final
+                condition for each end (second derivate is equal to 0). All of this secure the fact that the function is
+                continuous, soft and concavity is the same bewteen every point involved.
+            </p>
+
+        </div>
+
         <p *ngIf="method=='Lagrange' && show">Lagrange's Polynomial: {{result}}</p>
 
         <p *ngIf="method=='Newton' && show">Newton's Polynomial: {{result}}</p>
@@ -62,14 +102,14 @@
         </div>
 
         <div *ngIf="method=='Cubic Spline' && show">
-                <h3>Matrix</h3>
-                <table>
-                    <tr *ngFor="let row of dataResultCubic; index as i">
-                        <td *ngFor="let col of dataResultCubic; index as j" class="cell">{{matrix[i][j]}}</td>
-                        <td class="cell">{{indep[i]}}</td>
-                    </tr>
-                </table>
-            </div>
+            <h3>Matrix</h3>
+            <table>
+                <tr *ngFor="let row of dataResultCubic; index as i">
+                    <td *ngFor="let col of dataResultCubic; index as j" class="cell">{{matrix[i][j]}}</td>
+                    <td class="cell">{{indep[i]}}</td>
+                </tr>
+            </table>
+        </div>
 
 
 

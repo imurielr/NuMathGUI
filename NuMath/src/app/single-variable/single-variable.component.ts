@@ -17,6 +17,7 @@ export class SingleVariableComponent implements OnInit {
   ngOnInit() {
   }
 
+  method_control = new FormControl('', [Validators.required]);
   f_control = new FormControl('', [Validators.required]);
   x0_control = new FormControl('', [Validators.required]);
   delta_control = new FormControl('', [Validators.required]);
@@ -630,6 +631,9 @@ export class SingleVariableComponent implements OnInit {
 
   getErrorMessage(type: string) {
     switch (type) {
+      case "method":
+        return this.method_control.hasError('required') ? 'You must select a method' : '';
+        break;
       case "f":
         return this.f_control.hasError('required') ? 'You must enter a value' : '';
         break;
@@ -657,7 +661,7 @@ export class SingleVariableComponent implements OnInit {
         return this.tol_control.hasError('required') ? 'You must enter a value' : '';
         break;
       case "error":
-        return this.error_control.hasError('required') ? 'You must enter a value' : '';
+        return this.error_control.hasError('required') ? 'You must select a value' : '';
         break;
       case "xi":
         return this.xi_control.hasError('required') ? 'You must enter a value' : '';

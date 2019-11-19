@@ -5,11 +5,12 @@
             <div class="form-container">
                 <mat-form-field style="margin-bottom: 6px;">
                     <mat-label>Method</mat-label>
-                    <mat-select matNativeControl [(value)]=method>
+                    <mat-select matNativeControl [formControl]="method_control" [(value)]=method>
                         <mat-option *ngFor="let method of methods" [value]="method">
                             {{method}}
                         </mat-option>
                     </mat-select>
+                    <mat-error *ngIf="method_control.invalid">{{getErrorMessage("method")}}</mat-error>
                 </mat-form-field>
 
                 <mat-form-field style="margin-bottom: 6px;">
@@ -402,13 +403,15 @@
 
         <div style="float: right;">
             <h3 *ngIf="method!=''" style="text-align: center;">Help</h3>
-            <p id=helper *ngIf="method=='Incremental Search'" style="float: right;">Incremental search aims to find an
+            <p id=helper *ngIf="method=='Incremental Search'" style="float: right;">
+                Incremental search aims to find an
                 interval that contains at least one root by iterating
                 through the function, starting at an initial value and adding a previously deifned delta
                 to it, until there's a sign change between two points a and b evaluated in the function.
             </p>
 
-            <p id=helper *ngIf="method=='Bisection'" style="float: right;">Bisection is a closed method that uses an
+            <p id=helper *ngIf="method=='Bisection'" style="float: right;">
+                Bisection is a closed method that uses an
                 interval that contains a root,
                 which means there is a change of sign between the limits of the interval
                 and the function is continuous on said interval. Then it generates a
@@ -418,7 +421,8 @@
             </p>
 
 
-            <p id=helper *ngIf="method=='False Position'" style="float: right;">False position is a closed method that
+            <p id=helper *ngIf="method=='False Position'" style="float: right;">
+                False position is a closed method that
                 uses an interval containing
                 a root and it finds the root’s exact or approximate value by tracing
                 a straight line between both extremes of the interval and taking the
@@ -427,7 +431,8 @@
                 interval, until the root is found.
             </p>
 
-            <p id=helper *ngIf="method=='Fixed Point'" style="float: right;">Fixed point is an open method that aims to
+            <p id=helper *ngIf="method=='Fixed Point'" style="float: right;">
+                Fixed point is an open method that aims to
                 find the root of a
                 function by using an initial value and generating a succession of values
                 following xn+1=g(xn), this way it hopes to converge to a certain value
@@ -435,7 +440,8 @@
                 for the intersection between g(x) and the line y=x.
             </p>
 
-            <p id=helper *ngIf="method=='Newton'" style="float: right;">Newton’s method is a fixed point variation,
+            <p id=helper *ngIf="method=='Newton'" style="float: right;">
+                Newton’s method is a fixed point variation,
                 where the function g is calculated as
                 xn+1=xn-f(xn)f'(xn), and starts from a given initial value. It then generates a
                 succession of values to finally converge to a root. Graphically, Newton’s method
@@ -444,7 +450,8 @@
                 This method is extremely fast, even though a good initial value is needed to perform that well.
             </p>
 
-            <p id=helper *ngIf="method=='Secant'" style="float: right;">The secant method is a variation of the fixed
+            <p id=helper *ngIf="method=='Secant'" style="float: right;">
+                The secant method is a variation of the fixed
                 point method, where the
                 g function is calculated as xi+1=xi-f(xi)*(xi-xi-1)f(xi)-f(xi-1) and
                 starts from two initial values x0 and x1. It then generates a succession
@@ -456,13 +463,15 @@
                 containing a root though).
             </p>
 
-            <p id=helper *ngIf="method=='Multiple Roots'" style="float: right;">The multiple roots method is a variant of Newton’s and the fixed 
-                    point methods, where the update rule of the succession is 
-                    xn+1=xn-f(xn)*f'(xn)f'(xn)2 -f(xn)*f''(xn) . It works especially 
-                    well when the derivative of the function tends to zero as it nears 
-                    the root, case in which neither Newton’s nor the fixed point method 
-                    work due to convergence problems.
-       </p>
+            <p id=helper *ngIf="method=='Multiple Roots'" style="float: right;">
+                The multiple roots method is a variant
+                of Newton’s and the fixed
+                point methods, where the update rule of the succession is
+                xn+1=xn-f(xn)*f'(xn)f'(xn)2 -f(xn)*f''(xn) . It works especially
+                well when the derivative of the function tends to zero as it nears
+                the root, case in which neither Newton’s nor the fixed point method
+                work due to convergence problems.
+            </p>
 
         </div>
 

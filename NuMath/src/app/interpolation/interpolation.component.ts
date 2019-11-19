@@ -25,6 +25,7 @@ export class InterpolationComponent implements OnInit {
     "Cubic Spline"
   ];
 
+  method_control = new FormControl('', [Validators.required]);
   n_control = new FormControl('', [Validators.required, Validators.min(2)]);
 
 
@@ -41,7 +42,7 @@ export class InterpolationComponent implements OnInit {
   matrix;
   indep;
 
-  limits=[];
+  limits = [];
   show = false;
 
   method;
@@ -49,9 +50,12 @@ export class InterpolationComponent implements OnInit {
   showMatrix() {
     this.show = false;
 
-    if (this.n_control.invalid) {
+    if (this.n_control.invalid || this.method_control.invalid) {
       if (this.n_control.hasError('min')) {
         this.openSnackBar("The number of equations should be greater than 2", "Ok");
+      }
+      else if (this.method_control.hasError('required')) {
+        this.openSnackBar("Please select a method", "Ok");
       }
       else {
         this.openSnackBar("Please enter the number of equations", "Ok");
@@ -60,8 +64,8 @@ export class InterpolationComponent implements OnInit {
     else {
       this.numEq = Number((document.getElementById('n') as HTMLInputElement).value);
       this.data = Array(Number(this.numEq));
-      this.dataResult = Array((Number(this.numEq)-1)*3);
-      this.dataResultCubic = Array((Number(this.numEq)-1)*4);
+      this.dataResult = Array((Number(this.numEq) - 1) * 3);
+      this.dataResultCubic = Array((Number(this.numEq) - 1) * 4);
       this.returningDataPoints = new Array();
       this.showTable = true;
     }
@@ -96,10 +100,16 @@ export class InterpolationComponent implements OnInit {
     }
   }
 
-  getErrorMessage() {
-    return this.n_control.hasError('required') ? 'Please enter a number' :
-      this.n_control.hasError('min') ? 'Please enter a bigger number' :
-        ''
+  getErrorMessage(type: string) {
+    switch (type) {
+      case "method":
+        return this.method_control.hasError('required') ? 'You must select a method' : '';
+        break;
+      case "n":
+        return this.n_control.hasError('required') ? 'Please enter a number' :
+          this.n_control.hasError('min') ? 'Please enter a bigger number' :
+          ''
+    }
   }
 
   openSnackBar(message: string, action: string) {
@@ -147,7 +157,7 @@ export class InterpolationComponent implements OnInit {
   }
 
   postLinearSpline(numPoints: Number, points) {
-  
+
     const req = this.http.post(`/methods/linearSpline`, JSON.stringify({
       numPoints: numPoints,
       points: points
@@ -162,8 +172,8 @@ export class InterpolationComponent implements OnInit {
           this.function = res['functions'];
           let lim = res['limits'];
 
-          for (let i = 0; i < lim.length; i+=2) {
-            this.limits.push(lim[i] + ' <= x <= ' + lim[i+1]);
+          for (let i = 0; i < lim.length; i += 2) {
+            this.limits.push(lim[i] + ' <= x <= ' + lim[i + 1]);
           }
           this.show = true;
         }
@@ -171,7 +181,7 @@ export class InterpolationComponent implements OnInit {
   }
 
   postQuadraticSpline(numPoints: Number, points) {
-  
+
     const req = this.http.post(`/methods/quadraticSpline`, JSON.stringify({
       numPoints: numPoints,
       points: points
@@ -185,14 +195,14 @@ export class InterpolationComponent implements OnInit {
         res => {
           this.matrix = res['matrix'];
           this.indep = res['indep'];
-          
+
           this.show = true;
         }
       )
   }
 
   postCubicSpline(numPoints: Number, points) {
-  
+
     const req = this.http.post(`/methods/cubicSpline`, JSON.stringify({
       numPoints: numPoints,
       points: points

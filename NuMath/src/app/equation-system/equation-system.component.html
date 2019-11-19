@@ -5,17 +5,18 @@
             <div class="form-container">
                 <mat-form-field style="margin-bottom: 6px;">
                     <mat-label>Method</mat-label>
-                    <mat-select matNativeControl [(value)]=method>
+                    <mat-select matNativeControl [formControl]="method_control" [(value)]=method>
                         <mat-option *ngFor="let method of methods" [value]="method">
                             {{method}}
                         </mat-option>
                     </mat-select>
+                    <mat-error *ngIf="method_control.invalid">{{getErrorMessage("method")}}</mat-error>
                 </mat-form-field>
 
                 <mat-form-field style="margin-bottom: 4px;">
                     <input id="n" matInput placeholder="Number of Equations" type="number" [formControl]="n_control"
                         required>
-                    <mat-error *ngIf="n_control.invalid">{{getErrorMessage()}}</mat-error>
+                    <mat-error *ngIf="n_control.invalid">{{getErrorMessage("n")}}</mat-error>
                 </mat-form-field>
                 <button mat-raised-button color="primary" style="width: min-content;" (click)="showMatrix();">Enter
                     Matrix</button>
@@ -89,7 +90,69 @@
 
 
         <div *ngIf="method!=''">
-            <p id=helper *ngIf="method=='Jacobi'"> Method used to solve single variable equations. It uses initial
+            <p id=helper *ngIf="method=='Simple Gaussian Elimination'">
+                Simple Gaussian Elimination is an algorithm for solving systems
+                of linear equations, by doing operations on the corresponding
+                augmented matrix. It does this by multiplying rows by a nonzero
+                number and adding a multiple of one row to another, so it can
+                transform the matrix into an upper triangular matrix and then
+                do a backwards substitution to find the value corresponding to
+                every unknown in the system.
+            </p>
+
+            <p id=helper *ngIf="method=='Gaussian Elimination with Partial Pivot'">
+                In the Gaussian elimination with total pivot,at the iteration k of the elimination,
+                the largest of the elements (in absolute value) belonging to column k is relocated to position akk,
+                meaning, the biggest element among the |aik| with kin , then the rows are exchanged, placing the major
+                in row k.
+            </p>
+
+            <p id=helper *ngIf="method=='Gaussian Elimination with Total Pivot'">
+                In the Gaussian elimination with total pivot the major element is sought in each stage k,
+                among the elements that correspond to the submatrix, which results from eliminating rows R1
+                through Rk-1 and columns from C1 to Ck-1 in matrix Ab, independent terms are not taken into account.
+                When the largest number of these elements is found, the row and column changes are made where it is
+                located in the Abkk position.
+                Endally, the total pivot places the largest values ​​of each submatrix on the diagonal. The multipliers
+                maintain the same property of the partial pivot
+                where they are less than or equal to 1, but the probability that they are less is much greater than the
+                partial pivot.
+            </p>
+
+            <p id=helper *ngIf="method=='Doolittle Factorization'">
+                Doolittle method is an LU decomposition algorithm which decomposes a matrix into a lower triangular
+                matrix (L)
+                and a unit upper triangular matrix (U) in order to solve a given system of equations, by doing a forward
+                substitution
+                using the ‘L’ matrix and the independent terms, generating a transition vector ‘z’, and then doing a
+                backward substitution
+                using the ‘U’ matrix and the said transition vector. Unlike Crout’s method, this method puts 1 on the
+                diagonal of the matrix L
+                and then calculates the other values ​​of both matrices.
+            </p>
+
+            <p id=helper *ngIf="method=='Crout Factorization'">
+                Crout method is an LU decomposition algorithm which decomposes a matrix into a lower triangular matrix
+                (L)
+                and a unit upper triangular matrix (U) in order to solve a given system of equations, by doing a forward
+                substitution
+                using the ‘L’ matrix and the independent terms, generating a transition vector ‘z’, and then doing a
+                backward substitution
+                using the ‘U’ matrix and the said transition vector.
+            </p>
+
+            <p id=helper *ngIf="method=='Cholesky Factorization'">
+                Cholesky method is an LU decomposition algorithm which decomposes a matrix into a lower triangular
+                matrix (L)
+                and a unit upper triangular matrix (U), whose diagonal elements are the same, in order to solve a given
+                system of equations,
+                by doing a forward substitution using the ‘L’ matrix and the independent terms, generating a transition
+                vector ‘z’,
+                and then doing a backward substitution using the ‘U’ matrix and the said transition vector.
+            </p>
+
+            <p id=helper *ngIf="method=='Jacobi'">
+                Method used to solve single variable equations. It uses initial
                 values to
                 calculate new values.
                 Each diagonal element is solved for, an approximate value is plugged in. The process iterates until it
@@ -97,7 +160,8 @@
                 If the matrix used is strictly diagonally dominant the method always converges.
             </p>
 
-            <p id=helper *ngIf="method=='Gauss-Seidel'"> The Gauss-Seidel method is an iterative way to solve a given
+            <p id=helper *ngIf="method=='Gauss-Seidel'">
+                The Gauss-Seidel method is an iterative way to solve a given
                 system of equations. It is a modification of
                 Jacobi’s method,
                 because in each iteration it uses the updated values to find the next one, instead of using all the
@@ -107,6 +171,7 @@
                 and positive
                 definite.
             </p>
+
         </div>
 
         <div *ngIf="show">

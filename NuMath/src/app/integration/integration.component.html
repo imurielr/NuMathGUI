@@ -5,37 +5,66 @@
             <div class="form-container">
                 <mat-form-field style="margin-bottom: 6px;">
                     <mat-label>Method</mat-label>
-                    <mat-select matNativeControl [(value)]=method>
+                    <mat-select matNativeControl [formControl]="method_control" [(value)]=method>
                         <mat-option *ngFor="let method of methods" [value]="method">
                             {{method}}
                         </mat-option>
                     </mat-select>
+                    <mat-error *ngIf="method_control.invalid">{{getErrorMessage("method")}}</mat-error>
                 </mat-form-field>
 
-                        <mat-form-field style="margin-bottom: 4px;">
-                            <input id="n" matInput placeholder="Number of Points" type="number" [formControl]="n_control" required>
-                            <mat-error *ngIf="n_control.invalid">{{getErrorMessage()}}</mat-error>
-                        </mat-form-field>
-                        <button mat-raised-button color="primary" style="width: min-content;" (click)="showMatrix();">Enter Matrix</button>
-                    <br>
-                    <div *ngIf="showTable">
-                        <h4> Please enter points (x , y)</h4>
-                        <form>
-                            <table id="matrix">
-                                <tr *ngFor="let row of data; index as i" id="row{{i+1}}">
-                                    <p> Point {{i+1}} </p>
-                                    <td *ngFor="let number of [0,1]"><input class="cell" id="cell{{i+1}}{{number}}" type="number" required></td>
-                                </tr>
-                            </table>
-                            <button mat-raised-button color="primary" style="width: min-content; margin-top: 10px;" (click)="calculate();">Calculate</button>
-                        </form>
-                    </div>
+                <mat-form-field style="margin-bottom: 4px;">
+                    <input id="n" matInput placeholder="Number of Points" type="number" [formControl]="n_control"
+                        required>
+                    <mat-error *ngIf="n_control.invalid">{{getErrorMessage("n")}}</mat-error>
+                </mat-form-field>
+                <button mat-raised-button color="primary" style="width: min-content;" (click)="showMatrix();">Enter
+                    Matrix</button>
+                <br>
+                <div *ngIf="showTable">
+                    <h4> Please enter points (x , y)</h4>
+                    <form>
+                        <table id="matrix">
+                            <tr *ngFor="let row of data; index as i" id="row{{i+1}}">
+                                <p> Point {{i+1}} </p>
+                                <td *ngFor="let number of [0,1]"><input class="cell" id="cell{{i+1}}{{number}}"
+                                        type="number" required></td>
+                            </tr>
+                        </table>
+                        <button mat-raised-button color="primary" style="width: min-content; margin-top: 10px;"
+                            (click)="calculate();">Calculate</button>
+                    </form>
+                </div>
 
             </div>
         </form>
     </div>
 
     <div style="width: 68%; float: right;">
+
+        <div *ngIf="method!=''">
+            <p id=helper *ngIf="method=='General Trapezium'">
+                Method that finds the value of a definite integral by
+                subdividing the interval [a.b] into n subintervals of equal size and applying to each of these the
+                trapezium rule, and thus obtaining the result by adding the result of each subinterval using:
+                <img src="../../assets/trapezium.png">
+            </p>
+
+            <p id=helper *ngIf="method=='General Simpson 1/3'">
+                Method that uses n + 1 points with n pair, which subdivide the interval evenly and by which the function
+                is approximated using Lagrange quadratic polynomial, and once the corresponding values ​​of x and y are
+                obtained, the result is approximated with:
+                <img src="../../assets/simpson1_3.png">
+            </p>
+
+            <p id=helper *ngIf="method=='General Simpson 3/8'">
+                Method that uses n + 1 points with n multiple of 3, which subdivides the interval evenly and by which
+                the function is approximated using the Lagrange cubic polynomial, and once the corresponding values ​​of
+                x and y are obtained, the result is approximates with:
+                <img src="../../assets/simpson3_8.png">
+            </p>
+        </div>
+
         <p *ngIf="show">Result: {{result}}</p>
     </div>
 

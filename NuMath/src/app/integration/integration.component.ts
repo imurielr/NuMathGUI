@@ -25,6 +25,7 @@ export class IntegrationComponent implements OnInit {
 
   method;
 
+  method_control = new FormControl('', [Validators.required]);
   n_control = new FormControl('', [Validators.required, Validators.min(2)]);
 
 
@@ -38,9 +39,12 @@ export class IntegrationComponent implements OnInit {
   show;
 
   showMatrix() {
-    if (this.n_control.invalid) {
+    if (this.n_control.invalid || this.method_control.invalid) {
       if (this.n_control.hasError('min')) {
         this.openSnackBar("The number of equations should be greater than 2", "Ok");
+      }
+      else if (this.method_control.hasError('required')) {
+        this.openSnackBar("Please select a method", "Ok");
       }
       else {
         this.openSnackBar("Please enter the number of equations", "Ok");
@@ -79,10 +83,16 @@ export class IntegrationComponent implements OnInit {
 
   }
 
-  getErrorMessage() {
-    return this.n_control.hasError('required') ? 'Please enter a number' :
-      this.n_control.hasError('min') ? 'Please enter a bigger number' :
-        ''
+  getErrorMessage(type: string) {
+    switch (type) {
+      case "method":
+        return this.method_control.hasError('required') ? 'You must select a method' : '';
+        break;
+      case "n":
+        return this.n_control.hasError('required') ? 'Please enter a number' :
+          this.n_control.hasError('min') ? 'Please enter a bigger number' :
+            ''
+    }
   }
 
   openSnackBar(message: string, action: string) {

@@ -17,6 +17,7 @@ export class EquationSystemComponent implements OnInit {
   ngOnInit() {
   }
 
+  method_control = new FormControl('', [Validators.required]);
   n_control = new FormControl('', [Validators.required, Validators.min(2)]);
   nIter_control = new FormControl('', [Validators.required, Validators.min(1)]);
   tol_control = new FormControl('', [Validators.required]);
@@ -26,7 +27,7 @@ export class EquationSystemComponent implements OnInit {
   methods = [
     "Simple Gaussian Elimination",
     "Gaussian Elimination with Partial Pivot",
-    "Gaussian Elimination witn Total Pivot",
+    "Gaussian Elimination with Total Pivot",
     "Doolittle Factorization",
     "Crout Factorization",
     "Cholesky Factorization",
@@ -63,12 +64,12 @@ export class EquationSystemComponent implements OnInit {
     this.show = false;
     this.errorFound = false;
 
-    if (this.n_control.invalid) {
+    if (this.n_control.invalid || this.method_control.invalid) {
       if (this.n_control.hasError('min')) {
         this.openSnackBar("The number of equations should be greater than 2", "Ok");
       }
-      else if (this.method == "Jacobi" && (this.lambda_control.hasError('min') || this.lambda_control.hasError('max'))) {
-        this.openSnackBar("Lambda shoud be a number between 0 and 1", "Ok");
+      else if (this.method_control.hasError('required')) {
+        this.openSnackBar("Please select a method", "Ok");
       }
       else {
         this.openSnackBar("Please enter the number of equations", "Ok");
@@ -115,7 +116,7 @@ export class EquationSystemComponent implements OnInit {
         this.postCrout(Number(this.numEq), this.returningDataMatrix, this.returningDataB);
         break;
       case "Cholesky Factorization":
-        this.postCholesky(Number(this.numEq), this.returningDataMatrix, this.returningDataB);    
+        this.postCholesky(Number(this.numEq), this.returningDataMatrix, this.returningDataB);
         break;
     }
   }
@@ -126,7 +127,7 @@ export class EquationSystemComponent implements OnInit {
       if (this.nIter_control.hasError('min')) {
         this.openSnackBar("Please enter a valid value for the number of iterations", "Ok");
       }
-      else if (this.lambda_control.hasError('min') || this.lambda.hasError('max')) {
+      else if (this.lambda_control.hasError('min') || this.lambda_control.hasError('max')) {
         this.openSnackBar("Please enter a valid number for lambda", "Ok");
       }
       else {
@@ -161,15 +162,38 @@ export class EquationSystemComponent implements OnInit {
         this.postJacobi(Number(this.numEq), Number(this.nIter), Number(this.tolerance), Number(this.lambda), this.error, this.returningDataInitial, this.returningDataMatrix, this.returningDataB);
       }
       else if (this.method == 'Gauss-Seidel') {
-        this.postGauss_Seidel(Number(this.numEq), Number(this.nIter), Number(this.tolerance), Number(this.lambda), this.error, this.returningDataInitial, this.returningDataMatrix, this.returningDataB);    
+        this.postGauss_Seidel(Number(this.numEq), Number(this.nIter), Number(this.tolerance), Number(this.lambda), this.error, this.returningDataInitial, this.returningDataMatrix, this.returningDataB);
       }
     }
   }
- 
-  getErrorMessage() {
-    return this.n_control.hasError('required') ? 'Please enter a number' :
-      this.n_control.hasError('min') ? 'Please enter a bigger number' :
-        ''
+
+  getErrorMessage(type: string) {
+    switch (type) {
+      case "method":
+        return this.method_control.hasError('required') ? 'You must select a method' : '';
+        break;
+      case "n":
+        return this.n_control.hasError('required') ? 'Please enter a number' :
+          this.n_control.hasError('min') ? 'Please enter a bigger number' :
+            ''
+        break;
+      case "nIter":
+        return this.nIter_control.hasError('required') ? 'You must enter a value' :
+          this.nIter_control.hasError('min') ? 'The number of iterations must be bigger than 1' :
+            '';
+        break;
+      case "tol":
+        return this.tol_control.hasError('required') ? 'You must enter a value' : '';
+        break;
+      case "lambda":
+        return this.lambda_control.hasError('required') ? 'You must enter a value' :
+          this.lambda_control.hasError('min') || this.lambda_control.hasError('max') ? 'Please enter a number between 0 and 1' :
+            '';
+        break;
+      case "error":
+        return this.error_control.hasError('required') ? 'You must select a value' : '';
+        break;
+    }
   }
 
   openSnackBar(message: string, action: string) {
@@ -185,23 +209,23 @@ export class EquationSystemComponent implements OnInit {
       numsA: dataA,
       numsB: dataB
     }),
-    {
-      headers:{
-        'Content-Type': 'application/json',
-      }
-    })
-    .subscribe(
-      res => {
-        if (res['error'] == undefined) {
-          this.result = res['results'];
-          this.show = true;
+      {
+        headers: {
+          'Content-Type': 'application/json',
         }
-        else {
-          this.result = res['error'];
-          this.errorFound = true;
+      })
+      .subscribe(
+        res => {
+          if (res['error'] == undefined) {
+            this.result = res['results'];
+            this.show = true;
+          }
+          else {
+            this.result = res['error'];
+            this.errorFound = true;
+          }
         }
-      }
-    )
+      )
   }
 
   postGEP(numEq: Number, dataA, dataB) {
@@ -211,23 +235,23 @@ export class EquationSystemComponent implements OnInit {
       numsA: dataA,
       numsB: dataB
     }),
-    {
-      headers:{
-        'Content-Type': 'application/json',
-      }
-    })
-    .subscribe(
-      res => {
-        if (res['error'] == undefined) {
-          this.result = res['results'];
-          this.show = true;
+      {
+        headers: {
+          'Content-Type': 'application/json',
         }
-        else {
-          this.result = res['error'];
-          this.errorFound = true;
+      })
+      .subscribe(
+        res => {
+          if (res['error'] == undefined) {
+            this.result = res['results'];
+            this.show = true;
+          }
+          else {
+            this.result = res['error'];
+            this.errorFound = true;
+          }
         }
-      }
-    )
+      )
   }
 
   postGET(numEq: Number, dataA, dataB) {
@@ -237,49 +261,49 @@ export class EquationSystemComponent implements OnInit {
       numsA: dataA,
       numsB: dataB
     }),
-    {
-      headers:{
-        'Content-Type': 'application/json',
-      }
-    })
-    .subscribe(
-      res => {
-        if (res['error'] == undefined) {
-          this.result = res['results'];
-          this.show = true;
+      {
+        headers: {
+          'Content-Type': 'application/json',
         }
-        else {
-          this.result = res['error'];
-          this.errorFound = true;
+      })
+      .subscribe(
+        res => {
+          if (res['error'] == undefined) {
+            this.result = res['results'];
+            this.show = true;
+          }
+          else {
+            this.result = res['error'];
+            this.errorFound = true;
+          }
         }
-      }
-    )
+      )
   }
-  
+
   postDoolittle(numEq: Number, dataA, dataB) {
-  
+
     const req = this.http.post(`/methods/doolittle`, JSON.stringify({
       numEq: numEq,
       numsA: dataA,
       numsB: dataB
     }),
-    {
-      headers:{
-        'Content-Type': 'application/json',
-      }
-    })
-    .subscribe(
-      res => {
-        if (res['error'] == undefined) {
-          this.result = res['results'];
-          this.show = true;
+      {
+        headers: {
+          'Content-Type': 'application/json',
         }
-        else {
-          this.result = res['error'];
-          this.errorFound = true;
+      })
+      .subscribe(
+        res => {
+          if (res['error'] == undefined) {
+            this.result = res['results'];
+            this.show = true;
+          }
+          else {
+            this.result = res['error'];
+            this.errorFound = true;
+          }
         }
-      }
-    )
+      )
   }
 
   postCrout(numEq: Number, dataA, dataB) {
@@ -289,23 +313,23 @@ export class EquationSystemComponent implements OnInit {
       numsA: dataA,
       numsB: dataB
     }),
-    {
-      headers:{
-        'Content-Type': 'application/json',
-      }
-    })
-    .subscribe(
-      res => {
-        if (res['error'] == undefined) {
-          this.result = res['results'];
-          this.show = true;
+      {
+        headers: {
+          'Content-Type': 'application/json',
         }
-        else {
-          this.result = res['error'];
-          this.errorFound = true;
+      })
+      .subscribe(
+        res => {
+          if (res['error'] == undefined) {
+            this.result = res['results'];
+            this.show = true;
+          }
+          else {
+            this.result = res['error'];
+            this.errorFound = true;
+          }
         }
-      }
-    )
+      )
   }
 
   postCholesky(numEq: Number, dataA, dataB) {
@@ -315,23 +339,23 @@ export class EquationSystemComponent implements OnInit {
       numsA: dataA,
       numsB: dataB
     }),
-    {
-      headers:{
-        'Content-Type': 'application/json',
-      }
-    })
-    .subscribe(
-      res => {
-        if (res['error'] == undefined) {
-          this.result = res['results'];
-          this.show = true;
+      {
+        headers: {
+          'Content-Type': 'application/json',
         }
-        else {
-          this.result = res['error'];
-          this.errorFound = true;
+      })
+      .subscribe(
+        res => {
+          if (res['error'] == undefined) {
+            this.result = res['results'];
+            this.show = true;
+          }
+          else {
+            this.result = res['error'];
+            this.errorFound = true;
+          }
         }
-      }
-    )
+      )
   }
 
   postJacobi(numEq: Number, nIter: Number, tol: Number, lambda: Number, error: string, init, dataA, dataB) {
@@ -346,24 +370,24 @@ export class EquationSystemComponent implements OnInit {
       numsA: dataA,
       numsB: dataB
     }),
-    {
-      headers:{
-        'Content-Type': 'application/json',
-      }
-    })
-    .subscribe(
-      res => {
-        if (res['error'] == undefined) {
-          this.result = res['results'];
-          this.table = res['table'];
-          this.show = true;
+      {
+        headers: {
+          'Content-Type': 'application/json',
         }
-        else {
-          this.result = res['error'];
-          this.errorFound = true;
+      })
+      .subscribe(
+        res => {
+          if (res['error'] == undefined) {
+            this.result = res['results'];
+            this.table = res['table'];
+            this.show = true;
+          }
+          else {
+            this.result = res['error'];
+            this.errorFound = true;
+          }
         }
-      }
-    )
+      )
   }
 
   postGauss_Seidel(numEq: Number, nIter: Number, tol: Number, lambda: Number, error: string, init, dataA, dataB) {
@@ -378,24 +402,24 @@ export class EquationSystemComponent implements OnInit {
       numsA: dataA,
       numsB: dataB
     }),
-    {
-      headers:{
-        'Content-Type': 'application/json',
-      }
-    })
-    .subscribe(
-      res => {
-        if (res['error'] == undefined) {
-          this.result = res['results'];
-          this.table = res['table'];
-          this.show = true;
+      {
+        headers: {
+          'Content-Type': 'application/json',
         }
-        else {
-          this.result = res['error'];
-          this.errorFound = true;
+      })
+      .subscribe(
+        res => {
+          if (res['error'] == undefined) {
+            this.result = res['results'];
+            this.table = res['table'];
+            this.show = true;
+          }
+          else {
+            this.result = res['error'];
+            this.errorFound = true;
+          }
         }
-      }
-    )
+      )
   }
 
 }
